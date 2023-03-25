@@ -17,7 +17,7 @@ class Card:
     ...     money=1,
     ...     actions=[],
     ... )
-    Card(name='scout', type=<Type.SHIP: 2>, faction=<Faction.NONE: 1>, cost=0, actions=[], money=1)
+    Card(name='scout', type=<Type.SHIP: 2>, faction=<Faction.NONE: 1>, cost=0, actions=[], money=1, defense=0)
 
     """
 
@@ -27,3 +27,4 @@ class Card:
     cost: int
     actions: list[Action]
     money: int = 0
+    defense: int = 0
