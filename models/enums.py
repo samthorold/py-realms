@@ -19,3 +19,13 @@ class Type(Enum):
     BASE = auto()
     SHIP = auto()
     OUTPOST = auto()
+
+
+class ActionType(Enum):
+    WEALTH = auto()
+    ATTACK = auto()
+    HEALTH = auto()
+    SCRAP_TRADE = auto()
+    ACQUIRE_TOP = auto()
+    DESTROY_BASE = auto()
+    DRAW = auto()

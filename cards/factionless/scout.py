@@ -1,6 +1,6 @@
 from models.action import Action
 from models.card import Card
-from models.enums import Faction, Rule, Type
+from models.enums import ActionType, Faction, Rule, Type
 
 SCOUT = Card(
     name="scout",
@@ -8,6 +8,6 @@ SCOUT = Card(
     faction=Faction.NONE,
     cost=0,
     actions=[
-        Action(wealth=1, rule=Rule.ALWAYS),
+        Action(n=1, type=ActionType.WEALTH, rule=Rule.ALWAYS),
     ],
 )

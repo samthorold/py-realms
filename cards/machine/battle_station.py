@@ -1,6 +1,6 @@
 from models.action import Action
 from models.card import Card
-from models.enums import Faction, Rule, Type
+from models.enums import ActionType, Faction, Rule, Type
 
 
 BATTLE_STATION = Card(
@@ -10,6 +10,6 @@ BATTLE_STATION = Card(
     faction=Faction.MACHINE,
     defense=5,
     actions=[
-        Action(attack=5, rule=Rule.SCRAP),
+        Action(n=5, type=ActionType.ATTACK, rule=Rule.SCRAP),
     ],
 )

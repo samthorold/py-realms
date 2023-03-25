@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 
-from models.enums import Rule
+from models.enums import ActionType, Rule
 
 
 @dataclass
 class Action:
-    wealth: int = 0
-    attack: int = 0
-    health: int = 0
+    type: ActionType
+    n: int
     rule: Rule = Rule.ALWAYS
