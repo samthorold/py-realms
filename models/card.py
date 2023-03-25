@@ -8,16 +8,16 @@ from models.enums import Faction, Type
 class Card:
     """
     Examples:
-    >>> from models.enums import Faction, Type
+    >>> from models.action import Action
+    >>> from models.enums import Faction, Rule, Type
     >>> Card(
     ...     name="scout",
     ...     type=Type.SHIP,
     ...     faction=Faction.NONE,
     ...     cost=0,
-    ...     money=1,
-    ...     actions=[],
+    ...     actions=[Action(wealth=1, rule=Rule.ALWAYS)],
     ... )
-    Card(name='scout', type=<Type.SHIP: 2>, faction=<Faction.NONE: 1>, cost=0, actions=[], money=1, defense=0)
+    Card(name='scout', type=<Type.SHIP: 2>, faction=<Faction.NONE: 1>, cost=0, actions=[Action(wealth=1, attack=0, health=0, rule=<Rule.ALWAYS: 1>)], defense=0)
 
     """
 
@@ -26,5 +26,4 @@ class Card:
     faction: Faction
     cost: int
     actions: list[Action]
-    money: int = 0
     defense: int = 0

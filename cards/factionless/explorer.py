@@ -7,6 +7,5 @@ EXPLORER = Card(
     type=Type.SHIP,
     faction=Faction.NONE,
     cost=2,
-    money=2,
-    actions=[Action(attack=2, rule=Rule.SCRAP)],
+    actions=[Action(wealth=2, rule=Rule.ALWAYS), Action(attack=2, rule=Rule.SCRAP)],
 )

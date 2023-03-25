@@ -8,8 +8,8 @@ FEDERATION_SHUTTLE = Card(
     cost=1,
     type=Type.SHIP,
     faction=Faction.IMPERIAL,
-    money=2,
     actions=[
+        Action(wealth=2, rule=Rule.ALWAYS),
         Action(health=4, rule=Rule.ALLY_IN_PLAY),
     ],
 )

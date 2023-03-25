@@ -7,9 +7,9 @@ CUTTER = Card(
     cost=2,
     type=Type.SHIP,
     faction=Faction.IMPERIAL,
-    money=2,
     actions=[
-        Action(health=4),
+        Action(wealth=2, rule=Rule.ALWAYS),
+        Action(health=4, rule=Rule.ALWAYS),
         Action(attack=4, rule=Rule.ALLY_IN_PLAY),
     ],
 )
