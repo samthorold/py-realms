@@ -10,6 +10,6 @@ CUTTER = Card(
     money=2,
     actions=[
         Action(health=4),
-        Action(attack=4, rule=Rule.SAME_FACTION_IN_PLAY),
+        Action(attack=4, rule=Rule.ALLY_IN_PLAY),
     ],
 )

@@ -11,7 +11,7 @@ class Faction(Enum):
 
 class Rule(Enum):
     ALWAYS = auto()
-    SAME_FACTION_IN_PLAY = auto()
+    ALLY_IN_PLAY = auto()
     SCRAP = auto()
 
 

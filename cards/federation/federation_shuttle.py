@@ -10,6 +10,6 @@ FEDERATION_SHUTTLE = Card(
     faction=Faction.IMPERIAL,
     money=2,
     actions=[
-        Action(health=4, rule=Rule.SAME_FACTION_IN_PLAY),
+        Action(health=4, rule=Rule.ALLY_IN_PLAY),
     ],
 )
