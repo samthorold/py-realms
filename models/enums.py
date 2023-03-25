@@ -18,3 +18,4 @@ class Rule(Enum):
 class Type(Enum):
     BASE = auto()
     SHIP = auto()
+    OUTPOST = auto()
