@@ -16,15 +16,15 @@ def player_with_bases() -> Player:
     return player
 
 
-def test_player_draw(player) -> None:
+def test_player_draw(player: Player) -> None:
     player.draw()
 
 
-def test_player_new_hand(player) -> None:
+def test_player_new_hand(player: Player) -> None:
     player.new_hand()
     assert len(player.hand) == 5
 
 
-def test_player_new_hand_bases_in_play(player_with_bases) -> None:
+def test_player_new_hand_bases_in_play(player_with_bases: Player) -> None:
     player_with_bases.new_hand()
     assert len(player_with_bases.hand) > 5

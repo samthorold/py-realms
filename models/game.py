@@ -5,6 +5,6 @@ from models.player import Player
 class Game:
     """Orchestrate the Deck and Players."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.deck = Deck()
         self.players = [Player(name="P1"), Player(name="P2")]
