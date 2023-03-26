@@ -1,17 +1,19 @@
 import pytest
 
+from cards.deck import PLAYER_STARTING_DECK
 from cards.machine import BATTLE_STATION
 from models.player import Player
 
 
 @pytest.fixture
 def player() -> Player:
-    return Player("")
+    player = Player("", deck=list(PLAYER_STARTING_DECK))
+    player.new_hand()
+    return player
 
 
 @pytest.fixture
-def player_with_bases() -> Player:
-    player = Player("")
+def player_with_bases(player) -> Player:
     player.hand.append(BATTLE_STATION)
     return player
 

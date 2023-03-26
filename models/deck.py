@@ -37,14 +37,25 @@ class Deck:
         logger.debug("Deck select explorer")
         card = self.explorers.pop()
         logger.debug("Deck select card %r", card)
-        self.draw()
+        # self.draw()  # noop these days anyway
         return card
 
     def draw(self) -> None:
-        """Draw another card from the trade deck. No op if trade deck empty."""
+        """Draw another card from the trade deck.
+
+        No op if
+
+        - trade deck empty.
+        - trade row already has 5 cards.
+
+        """
         if self.trade_deck:
-            card = self.trade_deck.pop()
-            logger.debug("Deck draw %r", card)
-            self.trade_row.append(card)
+            if len(self.trade_row) < 5:
+                card = self.trade_deck.pop()
+                logger.debug("Deck draw %r", card)
+                self.trade_row.append(card)
+            else:
+                logger.debug("Trade row has 5 cards")
+
         else:
             logger.debug("Deck trade deck empty")
