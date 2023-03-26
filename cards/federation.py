@@ -1,12 +1,12 @@
 from models.action import Action
 from models.card import Card
-from models.enums import ActionType, Faction, Rule, Type
+from models.enums import ActionType, Faction, Rule, CardType
 
 
 FEDERATION_SHUTTLE = Card(
     name="federation shuttle",
     cost=1,
-    type=Type.SHIP,
+    type=CardType.SHIP,
     faction=Faction.IMPERIAL,
     actions=(
         Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),
@@ -17,7 +17,7 @@ FEDERATION_SHUTTLE = Card(
 CUTTER = Card(
     name="cutter",
     cost=2,
-    type=Type.SHIP,
+    type=CardType.SHIP,
     faction=Faction.IMPERIAL,
     actions=(
         Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),

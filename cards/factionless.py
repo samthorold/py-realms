@@ -1,10 +1,10 @@
 from models.action import Action
 from models.card import Card
-from models.enums import ActionType, Faction, Rule, Type
+from models.enums import ActionType, Faction, Rule, CardType
 
 EXPLORER = Card(
     name="explorer",
-    type=Type.SHIP,
+    type=CardType.SHIP,
     faction=Faction.NONE,
     cost=2,
     actions=(
@@ -16,7 +16,7 @@ EXPLORER = Card(
 
 SCOUT = Card(
     name="scout",
-    type=Type.SHIP,
+    type=CardType.SHIP,
     faction=Faction.NONE,
     cost=0,
     actions=(Action(n=1, type=ActionType.TRADE, rule=Rule.ALWAYS),),
@@ -26,7 +26,7 @@ SCOUT = Card(
 VIPER = Card(
     name="viper",
     cost=0,
-    type=Type.SHIP,
+    type=CardType.SHIP,
     faction=Faction.NONE,
     actions=(Action(n=1, type=ActionType.COMBAT, rule=Rule.ALWAYS),),
 )

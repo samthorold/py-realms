@@ -3,6 +3,7 @@ from random import shuffle
 from cards.deck import PLAYER_STARTING_DECK
 
 from models.card import Card
+from models.enums import CardType
 
 
 logger = logging.getLogger(__name__)
@@ -15,6 +16,9 @@ class Player:
         self.hand: list[Card] = []
         self.discard_pile: list[Card] = []
         self.in_play: list[Card] = []
+
+    def ships_in_play(self) -> tuple[Card, ...]:
+        return tuple(c for c in self.in_play if c.type == CardType.SHIP)
 
     def discard_from_hand(self, idx: int) -> None:
         logger.debug("%s discarding from hand %s", self.name, idx)

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from models.action import Action
-from models.enums import Faction, Type
+from models.enums import Faction, CardType
 
 
 @dataclass(frozen=True)
@@ -22,7 +22,7 @@ class Card:
     """
 
     name: str
-    type: Type
+    type: CardType
     faction: Faction
     cost: int
     actions: tuple[Action, ...]

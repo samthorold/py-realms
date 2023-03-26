@@ -15,7 +15,7 @@ class Rule(Enum):
     SCRAP = auto()
 
 
-class Type(Enum):
+class CardType(Enum):
     BASE = auto()
     SHIP = auto()
     OUTPOST = auto()
