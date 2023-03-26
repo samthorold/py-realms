@@ -7,10 +7,10 @@ EXPLORER = Card(
     type=Type.SHIP,
     faction=Faction.NONE,
     cost=2,
-    actions=[
+    actions=(
         Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),
         Action(n=2, type=ActionType.COMBAT, rule=Rule.SCRAP),
-    ],
+    ),
 )
 
 
@@ -19,9 +19,7 @@ SCOUT = Card(
     type=Type.SHIP,
     faction=Faction.NONE,
     cost=0,
-    actions=[
-        Action(n=1, type=ActionType.TRADE, rule=Rule.ALWAYS),
-    ],
+    actions=(Action(n=1, type=ActionType.TRADE, rule=Rule.ALWAYS),),
 )
 
 
@@ -30,5 +28,5 @@ VIPER = Card(
     cost=0,
     type=Type.SHIP,
     faction=Faction.NONE,
-    actions=[Action(n=1, type=ActionType.COMBAT, rule=Rule.ALWAYS)],
+    actions=(Action(n=1, type=ActionType.COMBAT, rule=Rule.ALWAYS),),
 )

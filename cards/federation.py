@@ -8,10 +8,10 @@ FEDERATION_SHUTTLE = Card(
     cost=1,
     type=Type.SHIP,
     faction=Faction.IMPERIAL,
-    actions=[
+    actions=(
         Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),
         Action(n=4, type=ActionType.AUTHORITY, rule=Rule.ALLY_IN_PLAY),
-    ],
+    ),
 )
 
 CUTTER = Card(
@@ -19,9 +19,9 @@ CUTTER = Card(
     cost=2,
     type=Type.SHIP,
     faction=Faction.IMPERIAL,
-    actions=[
+    actions=(
         Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),
         Action(n=4, type=ActionType.AUTHORITY, rule=Rule.ALWAYS),
         Action(n=4, type=ActionType.COMBAT, rule=Rule.ALLY_IN_PLAY),
-    ],
+    ),
 )

@@ -8,11 +8,11 @@ BATTLE_BLOB = Card(
     cost=6,
     type=Type.SHIP,
     faction=Faction.BLOB,
-    actions=[
+    actions=(
         Action(n=8, type=ActionType.COMBAT, rule=Rule.ALWAYS),
         Action(n=1, type=ActionType.DRAW, rule=Rule.ALLY_IN_PLAY),
         Action(n=4, type=ActionType.COMBAT, rule=Rule.SCRAP),
-    ],
+    ),
 )
 
 
@@ -21,11 +21,11 @@ BATTLE_POD = Card(
     cost=2,
     type=Type.SHIP,
     faction=Faction.BLOB,
-    actions=[
+    actions=(
         Action(n=4, type=ActionType.COMBAT, rule=Rule.ALWAYS),
         Action(n=1, type=ActionType.SCRAP_TRADE, rule=Rule.ALWAYS),
         Action(n=2, type=ActionType.COMBAT, rule=Rule.ALLY_IN_PLAY),
-    ],
+    ),
 )
 
 
@@ -34,10 +34,10 @@ BLOB_CARRIER = Card(
     cost=6,
     type=Type.SHIP,
     faction=Faction.BLOB,
-    actions=[
+    actions=(
         Action(n=7, type=ActionType.COMBAT, rule=Rule.ALWAYS),
         Action(n=1, type=ActionType.ACQUIRE_TOP, rule=Rule.ALLY_IN_PLAY),
-    ],
+    ),
 )
 
 
@@ -46,9 +46,9 @@ BLOB_DESTROYER = Card(
     cost=4,
     type=Type.SHIP,
     faction=Faction.BLOB,
-    actions=[
+    actions=(
         Action(n=6, type=ActionType.COMBAT, rule=Rule.ALWAYS),
         Action(n=1, type=ActionType.SCRAP_TRADE, rule=Rule.ALLY_IN_PLAY),
         Action(n=1, type=ActionType.DESTROY_BASE, rule=Rule.ALLY_IN_PLAY),
-    ],
+    ),
 )

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from models.enums import ActionType, Rule
 
 
-@dataclass
+@dataclass(frozen=True)
 class Action:
     type: ActionType
     n: int

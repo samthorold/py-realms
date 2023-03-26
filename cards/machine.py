@@ -9,7 +9,5 @@ BATTLE_STATION = Card(
     type=Type.OUTPOST,
     faction=Faction.MACHINE,
     defense=5,
-    actions=[
-        Action(n=5, type=ActionType.COMBAT, rule=Rule.SCRAP),
-    ],
+    actions=(Action(n=5, type=ActionType.COMBAT, rule=Rule.SCRAP),),
 )

@@ -4,7 +4,7 @@ from models.action import Action
 from models.enums import Faction, Type
 
 
-@dataclass
+@dataclass(frozen=True)
 class Card:
     """
     Examples:
@@ -25,5 +25,5 @@ class Card:
     type: Type
     faction: Faction
     cost: int
-    actions: list[Action]
+    actions: tuple[Action, ...]
     defense: int = 0
