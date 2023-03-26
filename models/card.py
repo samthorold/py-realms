@@ -27,3 +27,6 @@ class Card:
     cost: int
     actions: tuple[Action, ...]
     defense: int = 0
+
+    def __repr__(self) -> str:
+        return self.name

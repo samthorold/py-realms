@@ -11,18 +11,40 @@ logger = logging.getLogger(__name__)
 class Deck:
     def __init__(self, shuffle_on_init: bool = True):
         self.explorers = [EXPLORER] * 20
-        self.remaining = list(GAME_STARTING_DECK)
-        self.in_play: list[Card]
+        self.trade_deck = list(GAME_STARTING_DECK)
+        self.trade_row: list[Card] = []
         if shuffle_on_init:
-            shuffle(self.remaining)
+            shuffle(self.trade_deck)
 
-    def select_card(self, idx: int) -> Card:
+    def acquire(self, idx: int) -> Card:
+        """Returns the Card in the trade row at `idx` and draws another card."""
         logger.debug("Deck select card %s", idx)
-        card = self.in_play.pop(idx)
+        card = self.trade_row.pop(idx)
         logger.debug("Deck select card %r", card)
+        self.draw()
+        return card
+
+    def scrap(self, idx: int) -> None:
+        """Scraps the Card in the trade row at `idx` and draws another card."""
+        logger.debug("Deck select card %s", idx)
+        card = self.trade_row.pop(idx)
+        logger.debug("Deck select card %r", card)
+        self.draw()
+        return
+
+    def acquire_explorer(self) -> Card:
+        """Returns an Explorer."""
+        logger.debug("Deck select explorer")
+        card = self.explorers.pop()
+        logger.debug("Deck select card %r", card)
+        self.draw()
         return card
 
     def draw(self) -> None:
-        card = self.remaining.pop()
-        logger.debug("Deck draw %r", card)
-        self.in_play.append(card)
+        """Draw another card from the trade deck. No op if trade deck empty."""
+        if self.trade_deck:
+            card = self.trade_deck.pop()
+            logger.debug("Deck draw %r", card)
+            self.trade_row.append(card)
+        else:
+            logger.debug("Deck trade deck empty")
