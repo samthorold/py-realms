@@ -14,6 +14,8 @@ class Player:
         self,
         name: str,
         authority: int = 50,
+        trade: int = 0,
+        combat: int = 0,
         deck: list[Card] | None = None,
         hand: list[Card] | None = None,
         discard_pile: list[Card] | None = None,
@@ -21,6 +23,8 @@ class Player:
     ):
         self.name = name
         self.authority = authority
+        self.trade = trade
+        self.combat = combat
         self.deck = [] if deck is None else deck
         self.hand = [] if hand is None else hand
         self.discard_pile = [] if discard_pile is None else discard_pile
@@ -44,6 +48,9 @@ class Player:
     @property
     def outposts_in_play(self) -> tuple[Card, ...]:
         return tuple(c for c in self.in_play if c.type == CardType.OUTPOST)
+
+    def ally_in_play(self, card: Card) -> bool:
+        return any(card.faction == c.faction for c in self.in_play)
 
     def discard_from_hand(self, idx: int) -> None:
         logger.debug("%s discarding from hand %s", self.name, idx)
@@ -76,16 +83,17 @@ class Player:
         logger.debug("%s draw %s", self.name, card)
         self.hand.append(card)
 
-    def play(self, idx: int) -> None:
+    def play(self, idx: int) -> Card:
         if not self.hand:
             logger.debug("%s no cards to play (%s)", self.name, idx)
-            return
+            raise ValueError("No cards to play")
         card = self.hand.pop()
         logger.debug("%s play %s", self.name, card)
         self.in_play.append(card)
+        return card
 
     def new_hand(self) -> None:
         logger.debug("%s new hand", self.name)
-        # TODO: Check for infinite loop
-        while len(self.hand) < 5:
-            self.draw()
+        if not self.hand:
+            for _ in range(5):
+                self.draw()
