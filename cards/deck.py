@@ -1,7 +1,7 @@
-from cards.factionless.scout import SCOUT
-from cards.factionless.viper import VIPER
-from cards.federation.cutter import CUTTER
-from cards.federation.federation_shuttle import FEDERATION_SHUTTLE
+from cards.factionless import SCOUT
+from cards.factionless import VIPER
+from cards.federation import CUTTER
+from cards.federation import FEDERATION_SHUTTLE
 
 
 PLAYER_STARTING_DECK = tuple([VIPER] * 2 + [SCOUT] * 5)

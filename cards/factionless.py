@@ -12,3 +12,23 @@ EXPLORER = Card(
         Action(n=2, type=ActionType.ATTACK, rule=Rule.SCRAP),
     ],
 )
+
+
+SCOUT = Card(
+    name="scout",
+    type=Type.SHIP,
+    faction=Faction.NONE,
+    cost=0,
+    actions=[
+        Action(n=1, type=ActionType.WEALTH, rule=Rule.ALWAYS),
+    ],
+)
+
+
+VIPER = Card(
+    name="viper",
+    cost=0,
+    type=Type.SHIP,
+    faction=Faction.NONE,
+    actions=[Action(n=1, type=ActionType.ATTACK, rule=Rule.ALWAYS)],
+)
