@@ -23,7 +23,7 @@ class Type(Enum):
 
 class ActionType(Enum):
     TRADE = auto()
-    ATTACK = auto()
+    COMBAT = auto()
     HEALTH = auto()
     SCRAP_TRADE = auto()
     ACQUIRE_TOP = auto()

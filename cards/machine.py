@@ -10,6 +10,6 @@ BATTLE_STATION = Card(
     faction=Faction.MACHINE,
     defense=5,
     actions=[
-        Action(n=5, type=ActionType.ATTACK, rule=Rule.SCRAP),
+        Action(n=5, type=ActionType.COMBAT, rule=Rule.SCRAP),
     ],
 )

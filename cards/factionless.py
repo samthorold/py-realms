@@ -9,7 +9,7 @@ EXPLORER = Card(
     cost=2,
     actions=[
         Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),
-        Action(n=2, type=ActionType.ATTACK, rule=Rule.SCRAP),
+        Action(n=2, type=ActionType.COMBAT, rule=Rule.SCRAP),
     ],
 )
 
@@ -30,5 +30,5 @@ VIPER = Card(
     cost=0,
     type=Type.SHIP,
     faction=Faction.NONE,
-    actions=[Action(n=1, type=ActionType.ATTACK, rule=Rule.ALWAYS)],
+    actions=[Action(n=1, type=ActionType.COMBAT, rule=Rule.ALWAYS)],
 )
