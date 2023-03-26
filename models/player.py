@@ -26,6 +26,11 @@ class Player:
         self.discard_pile = [] if discard_pile is None else discard_pile
         self.in_play = [] if in_play is None else in_play
 
+    def __str__(self) -> str:
+        in_play = f"\n  ".join(str(c) for c in self.in_play)
+        hand = f"\n  ".join(str(c) for c in self.hand)
+        return f"{self.name}\n===\nIn Play\n{in_play}\n===\nHand\n{hand}"
+
     @property
     def ships_in_play(self) -> tuple[Card, ...]:
         return tuple(c for c in self.in_play if c.type == CardType.SHIP)
@@ -57,6 +62,10 @@ class Player:
         card = self.discard_pile.pop(idx)
         logger.debug("%s scrapping from discard pile %r", self.name, card)
 
+    def scrap_from_trade_row(self, idx: int) -> int:
+        logger.debug("%s scrapping from trade row %s", self.name, idx)
+        return idx
+
     def draw(self) -> Card:
         if not self.deck:
             self.deck = list(self.discard_pile)
@@ -65,5 +74,6 @@ class Player:
         return self.deck.pop()
 
     def new_hand(self) -> None:
+        # TODO: Check for infinite loop
         while len(self.hand) < 5:
             self.hand.append(self.draw())

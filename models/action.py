@@ -8,3 +8,7 @@ class Action:
     type: ActionType
     n: int
     rule: Rule = Rule.ALWAYS
+
+    def __str__(self) -> str:
+        rule = f" {self.rule}" if self.rule != Rule.ALWAYS else ""
+        return f"({self.n}) {self.type}{rule}"

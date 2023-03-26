@@ -30,3 +30,8 @@ class Card:
 
     def __repr__(self) -> str:
         return self.name
+
+    def __str__(self) -> str:
+        faction = self.faction
+        actions = "\n".join(f"  {a}" for a in self.actions)
+        return f"{self.name}: {faction} ({self.cost})\n{actions}"
