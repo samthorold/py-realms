@@ -1,6 +1,6 @@
 import pytest
 
-from cards.machine.battle_station import BATTLE_STATION
+from cards.machine import BATTLE_STATION
 from models.player import Player
 
 

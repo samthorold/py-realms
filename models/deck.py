@@ -2,7 +2,7 @@ import logging
 from random import shuffle
 
 from cards.deck import GAME_STARTING_DECK
-from cards.factionless.explorer import EXPLORER
+from cards.factionless import EXPLORER
 from models.card import Card
 
 logger = logging.getLogger(__name__)
