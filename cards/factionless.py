@@ -8,7 +8,7 @@ EXPLORER = Card(
     faction=Faction.NONE,
     cost=2,
     actions=[
-        Action(n=2, type=ActionType.WEALTH, rule=Rule.ALWAYS),
+        Action(n=2, type=ActionType.TRADE, rule=Rule.ALWAYS),
         Action(n=2, type=ActionType.ATTACK, rule=Rule.SCRAP),
     ],
 )
@@ -20,7 +20,7 @@ SCOUT = Card(
     faction=Faction.NONE,
     cost=0,
     actions=[
-        Action(n=1, type=ActionType.WEALTH, rule=Rule.ALWAYS),
+        Action(n=1, type=ActionType.TRADE, rule=Rule.ALWAYS),
     ],
 )
 
