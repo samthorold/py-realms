@@ -24,7 +24,7 @@ class Type(Enum):
 class ActionType(Enum):
     TRADE = auto()
     COMBAT = auto()
-    HEALTH = auto()
+    AUTHORITY = auto()
     SCRAP_TRADE = auto()
     ACQUIRE_TOP = auto()
     DESTROY_BASE = auto()
