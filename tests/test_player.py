@@ -14,12 +14,16 @@ def player() -> Player:
 
 @pytest.fixture
 def player_with_bases(player) -> Player:
-    player.hand.append(BATTLE_STATION)
+    player.in_play.append(BATTLE_STATION)
     return player
 
 
 def test_player_draw(player: Player) -> None:
+    og_hand = len(player.hand)
+    og_deck = len(player.deck)
     player.draw()
+    assert len(player.hand) > og_hand
+    assert len(player.deck) < og_deck
 
 
 def test_player_new_hand(player: Player) -> None:
@@ -29,4 +33,4 @@ def test_player_new_hand(player: Player) -> None:
 
 def test_player_new_hand_bases_in_play(player_with_bases: Player) -> None:
     player_with_bases.new_hand()
-    assert len(player_with_bases.hand) > 5
+    assert len(player_with_bases.hand) == 5

@@ -66,14 +66,26 @@ class Player:
         logger.debug("%s scrapping from trade row %s", self.name, idx)
         return idx
 
-    def draw(self) -> Card:
+    def draw(self) -> None:
         if not self.deck:
+            logger.debug("%s shuffling discard pile and moving to deck", self.name)
             self.deck = list(self.discard_pile)
             shuffle(self.deck)
             self.discard_pile = []
-        return self.deck.pop()
+        card = self.deck.pop()
+        logger.debug("%s draw %s", self.name, card)
+        self.hand.append(card)
+
+    def play(self, idx: int) -> None:
+        if not self.hand:
+            logger.debug("%s no cards to play (%s)", self.name, idx)
+            return
+        card = self.hand.pop()
+        logger.debug("%s play %s", self.name, card)
+        self.in_play.append(card)
 
     def new_hand(self) -> None:
+        logger.debug("%s new hand", self.name)
         # TODO: Check for infinite loop
         while len(self.hand) < 5:
-            self.hand.append(self.draw())
+            self.draw()
