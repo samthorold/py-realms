@@ -10,7 +10,7 @@ BATTLE_BLOB = Card(
     faction=Faction.BLOB,
     actions=(
         Action(n=8, type=ActionType.COMBAT, rule=Rule.ALWAYS),
-        Action(n=1, type=ActionType.DRAW, rule=Rule.ALLY_IN_PLAY),
+        Action(n=1, type=ActionType.DRAW, rule=Rule.ALLY),
         Action(n=4, type=ActionType.COMBAT, rule=Rule.SCRAP),
     ),
 )
@@ -24,7 +24,7 @@ BATTLE_POD = Card(
     actions=(
         Action(n=4, type=ActionType.COMBAT, rule=Rule.ALWAYS),
         Action(n=1, type=ActionType.SCRAP_TRADE, rule=Rule.ALWAYS),
-        Action(n=2, type=ActionType.COMBAT, rule=Rule.ALLY_IN_PLAY),
+        Action(n=2, type=ActionType.COMBAT, rule=Rule.ALLY),
     ),
 )
 
@@ -36,7 +36,7 @@ BLOB_CARRIER = Card(
     faction=Faction.BLOB,
     actions=(
         Action(n=7, type=ActionType.COMBAT, rule=Rule.ALWAYS),
-        Action(n=1, type=ActionType.ACQUIRE_TOP, rule=Rule.ALLY_IN_PLAY),
+        Action(n=1, type=ActionType.ACQUIRE_TOP, rule=Rule.ALLY),
     ),
 )
 
@@ -48,7 +48,7 @@ BLOB_DESTROYER = Card(
     faction=Faction.BLOB,
     actions=(
         Action(n=6, type=ActionType.COMBAT, rule=Rule.ALWAYS),
-        Action(n=1, type=ActionType.SCRAP_TRADE, rule=Rule.ALLY_IN_PLAY),
-        Action(n=1, type=ActionType.DESTROY_BASE, rule=Rule.ALLY_IN_PLAY),
+        Action(n=1, type=ActionType.SCRAP_TRADE, rule=Rule.ALLY),
+        Action(n=1, type=ActionType.DESTROY_BASE, rule=Rule.ALLY),
     ),
 )

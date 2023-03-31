@@ -3,13 +3,22 @@ from random import shuffle
 from cards.deck import PLAYER_STARTING_DECK
 
 from models.card import Card
-from models.enums import CardType
+from models.enums import CardType, Faction
 
 
 logger = logging.getLogger(__name__)
 
 
 class Player:
+    """
+    Examples:
+    >>> player = Player(name="Player 1")
+    >>> player.authority
+    50
+
+
+    """
+
     def __init__(
         self,
         name: str,
@@ -30,10 +39,12 @@ class Player:
         self.discard_pile = [] if discard_pile is None else discard_pile
         self.in_play = [] if in_play is None else in_play
 
-    def __str__(self) -> str:
-        in_play = f"\n  ".join(str(c) for c in self.in_play)
-        hand = f"\n  ".join(str(c) for c in self.hand)
-        return f"{self.name}\n===\nIn Play\n{in_play}\n===\nHand\n{hand}"
+    def __repr__(self) -> str:
+        return (
+            f"<Player(name={self.name}, authority={self.authority}, "
+            f"trade={self.trade}, combat={self.combat}, in_play={self.in_play}, "
+            f"deck={self.deck}, hand={self.hand}, discard_pile={self.discard_pile})>"
+        )
 
     @property
     def ships_in_play(self) -> tuple[Card, ...]:
@@ -49,8 +60,8 @@ class Player:
     def outposts_in_play(self) -> tuple[Card, ...]:
         return tuple(c for c in self.in_play if c.type == CardType.OUTPOST)
 
-    def ally_in_play(self, card: Card) -> bool:
-        return any(card.faction == c.faction for c in self.in_play)
+    def ally_in_play(self, faction: Faction) -> bool:
+        return any(faction == c.faction for c in self.in_play)
 
     def discard_from_hand(self, idx: int) -> None:
         logger.debug("%s discarding from hand %s", self.name, idx)
@@ -91,6 +102,12 @@ class Player:
         logger.debug("%s play %s", self.name, card)
         self.in_play.append(card)
         return card
+
+    def acquire(self, card: Card, top_of_deck: bool = False) -> None:
+        if top_of_deck:
+            self.deck.append(card)
+        else:
+            self.discard_pile.append(card)
 
     def new_hand(self) -> None:
         logger.debug("%s new hand", self.name)

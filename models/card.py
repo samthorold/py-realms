@@ -1,10 +1,7 @@
-from dataclasses import dataclass
-
 from models.action import Action
 from models.enums import Faction, CardType
 
 
-@dataclass(frozen=True)
 class Card:
     """
     Examples:
@@ -21,17 +18,26 @@ class Card:
 
     """
 
-    name: str
-    type: CardType
-    faction: Faction
-    cost: int
-    actions: tuple[Action, ...]
-    defense: int = 0
+    def __init__(
+        self,
+        name: str,
+        type: CardType,
+        faction: Faction,
+        cost: int,
+        actions: tuple[Action, ...],
+        defense: int = 0,
+    ):
+        self.name = name
+        self.type = type
+        self.faction = faction
+        self.cost = cost
+        self.actions = tuple(
+            Action(type=a.type, n=a.n, rule=a.rule, faction=faction) for a in actions
+        )
+        self.defense = defense
 
     def __repr__(self) -> str:
-        return self.name
-
-    def __str__(self) -> str:
-        faction = self.faction
-        actions = "\n".join(f"  {a}" for a in self.actions)
-        return f"{self.name}: {faction} ({self.cost})\n{actions}"
+        return (
+            f"<Card(name={self.name}, type={self.type}, faction={self.faction}, "
+            f"cost={self.cost}, actions={self.actions}, defense={self.defense})>"
+        )

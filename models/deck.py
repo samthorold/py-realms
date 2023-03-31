@@ -37,7 +37,6 @@ class Deck:
         logger.debug("Deck select explorer")
         card = self.explorers.pop()
         logger.debug("Deck select card %r", card)
-        # self.draw()  # noop these days anyway
         return card
 
     def draw(self) -> None:
