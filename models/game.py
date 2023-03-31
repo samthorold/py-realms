@@ -62,6 +62,11 @@ class Game:
         self.hand_size = hand_size
         self.first_hand_size = first_hand_size
 
+    def add_card_actions(self, card: Card) -> None:
+        for action in card.actions:
+            logger.debug("Game add action %r", action)
+            self.actions.append(action)
+
     def action(
         self, pidx: int, action: Action, idx: int = 0, card: Card | None = None
     ) -> None:
@@ -84,24 +89,33 @@ class Game:
         match action:
             case Action(type=ActionType.START_GAME, n=_, rule=_):
                 for _ in range(self.hand_size):
-                    self.actions.append(Action(type=ActionType.PLAY, n=1))
+                    self.actions.append(Action(type=ActionType.PLAY))
+                    self.actions.remove(action)
 
             case Action(type=ActionType.START_TURN, n=_, rule=_):
                 pl.new_hand()
                 for _ in range(self.first_hand_size):
-                    self.actions.append(Action(type=ActionType.PLAY, n=1))
+                    self.actions.append(Action(type=ActionType.PLAY))
+                    self.actions.remove(action)
 
             case Action(type=ActionType.PLAY, n=n):
                 card = pl.play(idx)
-                for a in card.actions:
-                    self.actions.append(a)
+                self.add_card_actions(card)
+                # Some kind of check on action rules being fulfilled
+                # could replace rules fulfilled with ALWAYS actions
                 self.actions.remove(action)
 
             case Action(type=ActionType.DRAW, n=n, rule=Rule.ALWAYS):
                 pl.draw()
+                self.actions.remove(action)
 
             case Action(type=ActionType.COMBAT, n=n, rule=Rule.ALWAYS):
                 pl.combat += n
+                self.actions.remove(action)
+
+            case Action(type=ActionType.TRADE, n=n, rule=Rule.ALWAYS):
+                pl.trade += n
+                self.actions.remove(action)
 
             case Action(type=ActionType.COMBAT, n=n, rule=Rule.ALLY_IN_PLAY):
                 if card is None:

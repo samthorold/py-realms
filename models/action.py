@@ -6,7 +6,7 @@ from models.enums import ActionType, Rule
 @dataclass(frozen=True)
 class Action:
     type: ActionType
-    n: int
+    n: int = 1
     rule: Rule = Rule.ALWAYS
 
     def __str__(self) -> str:
