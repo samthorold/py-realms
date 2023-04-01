@@ -7,6 +7,7 @@ from models.action import Action
 from models.card import Card
 from models.deck import Deck
 from models.enums import ActionType, CardType, Faction, Rule
+from models.exceptions import UnknownAction
 from models.player import Player
 
 
@@ -46,9 +47,10 @@ class Game:
         players: tuple[Player, Player] | None = None,
         hand_size: int = 5,
         first_hand_size: int = 3,
+        current_player: int = 0,
     ) -> None:
         self.trade_deck = deck_setup() if deck is None else deck
-        self.players = (
+        self._players = (
             tuple(
                 [
                     player_setup(name="P1", draw=3),
@@ -58,17 +60,31 @@ class Game:
             if players is None
             else players
         )
-        self.actions: list[Action]
-        self.hand_size = hand_size
-        self.first_hand_size = first_hand_size
+        self._actions = [Action(type=ActionType.START_GAME)]
+        self._hand_size = hand_size
+        self._first_hand_size = first_hand_size
+        self._current_player = current_player
+
+    def get_current_player(self) -> Player:
+        return self._players[self._current_player]
+
+    def hydrate_action(self, action: Action | ActionType | str) -> Action:
+        logger.debug(f"%r", action)
+        if isinstance(action, str):
+            action = ActionType.from_str(action)
+        logger.debug(f"%r", action)
+        if isinstance(action, ActionType):
+            action = Action(type=action)
+        logger.debug(f"%r", action)
+        return action
 
     def add_action(self, action: Action) -> None:
         logger.debug("Add action %r", action)
-        self.actions.append(action)
+        self._actions.append(action)
 
     def remove_action(self, action: Action) -> None:
         logger.debug("Remove action %r", action)
-        self.actions.remove(action)
+        self._actions.remove(action)
 
     def add_card_actions(self, card: Card) -> None:
         for action in card.actions:
@@ -82,7 +98,7 @@ class Game:
     def replace_ally_actions(self, pl: Player, faction: Faction) -> None:
         actions = [
             action
-            for action in self.actions
+            for action in self._actions
             if action.rule == Rule.ALLY and action.faction == faction
         ]
         for action in actions:
@@ -90,21 +106,40 @@ class Game:
                 self.replace_action_with_always(action)
 
     def replace_actions(self, player: Player) -> None:
-        logger.debug("Replace actions")
         for faction in Faction:
             self.replace_ally_actions(player, faction)
 
-    def action(self, pidx: int, action: Action, idx: int = 0) -> None:
-        pl = self.players[pidx]
-        logger.debug(f"%r", action)
+    def action(self, action: Action | ActionType | str, idx: int = 0) -> None:
+        """Execute one action.
+
+        Actions may lead to more actions being placed in the backlog.
+
+        Args:
+            action: Action to execute.
+            idx: Position in the player deck, trade row, etc.
+
+        Returns:
+            None
+
+        Raises:
+            UnknownActionType: The action type is not specified in the
+                [ActionType][models.enums.ActionType] enum.
+            UnknownAction: The action is not in the match statement
+                within this function.
+
+        """
+        logger.info("Start action")
+        pl = self.get_current_player()
+        # raises UnknownActionType
+        action = self.hydrate_action(action)
         match action:
             case Action(type=ActionType.START_GAME, n=_, rule=_, faction=_):
-                for _ in range(self.hand_size):
+                for _ in range(self._hand_size):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.START_TURN, n=_, rule=_, faction=_):
                 pl.new_hand()
-                for _ in range(self.first_hand_size):
+                for _ in range(self._first_hand_size):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.PLAY, n=_, rule=_, faction=_):
@@ -118,22 +153,25 @@ class Game:
                     any(
                         a.type == ActionType.NEXT_SHIP_TOP_OF_DECK
                         and a.rule == Rule.ALWAYS
-                        for a in self.actions
+                        for a in self._actions
                     )
                     and card.type == CardType.SHIP
                 )
                 pl.acquire(card, top_of_deck)
 
             case Action(type=ActionType.DRAW, n=n, rule=Rule.ALWAYS, faction=_):
-                pl.draw()
+                for _ in range(n):
+                    pl.draw()
 
             case Action(type=ActionType.COMBAT, n=n, rule=Rule.ALWAYS, faction=_):
-                pl.combat += n
+                pl.add_combat(n)
 
             case Action(type=ActionType.TRADE, n=n, rule=Rule.ALWAYS, faction=_):
-                pl.trade += n
+                pl.add_trade(n)
 
             case _:
-                raise ValueError(f"Not a known action {repr(action)}")
+                raise UnknownAction(f"Not a known action {repr(action)}")
 
         self.remove_action(action)
+
+        logger.info("End action")

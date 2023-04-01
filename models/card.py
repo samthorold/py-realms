@@ -5,15 +5,16 @@ from models.enums import Faction, CardType
 class Card:
     """
     Examples:
-    >>> from models.action import Action
-    >>> from models.enums import ActionType, CardType, Faction, Rule
-    >>> card = Card(
-    ...     name="scout",
-    ...     type=CardType.SHIP,
-    ...     faction=Faction.NONE,
-    ...     cost=0,
-    ...     actions=[Action(n=1, type=ActionType.AUTHORITY, rule=Rule.ALWAYS)],
-    ... )
+
+        >>> from models.action import Action
+        >>> from models.enums import ActionType, CardType, Faction, Rule
+        >>> card = Card(
+        ...     name="scout",
+        ...     type=CardType.SHIP,
+        ...     faction=Faction.NONE,
+        ...     cost=0,
+        ...     actions=[Action(n=1, type=ActionType.AUTHORITY, rule=Rule.ALWAYS)],
+        ... )
 
 
     """

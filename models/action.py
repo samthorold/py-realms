@@ -6,6 +6,14 @@ from models.enums import ActionType, Faction, Rule
 
 @dataclass(frozen=True)
 class Action:
+    """What, when, and how many times an action can be executed.
+
+    - What: [models.enums.ActionType][]
+    - When: [models.enums.Rule][] and [models.enums.Faction][]
+    - How many: `n`
+
+    """
+
     type: ActionType
     n: int = 1
     rule: Rule = Rule.ALWAYS

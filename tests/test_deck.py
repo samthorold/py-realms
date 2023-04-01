@@ -28,8 +28,7 @@ def test_acquire(deck: Deck) -> None:
 
 def test_scrap(deck: Deck) -> None:
     og_deck = len(deck.trade_deck)
-    card = deck.scrap(0)
-    assert not card
+    deck.scrap(0)
     assert len(deck.trade_row) == 5
     assert len(deck.trade_deck) == og_deck - 1
 

@@ -1,6 +1,6 @@
-from models.action import Action, ActionType
+from models.action import Action
 from models.card import Card
-from models.enums import Faction, Rule, CardType
+from models.enums import ActionType, Faction, Rule, CardType
 
 
 BATTLE_BLOB = Card(
