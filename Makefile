@@ -4,5 +4,5 @@ check:
 	mypy .
 
 test: check
-	pytest
+	coverage run -m pytest && coverage report -m --skip-covered
 
