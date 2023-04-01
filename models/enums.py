@@ -7,25 +7,25 @@ from models.exceptions import UnknownActionType
 class Faction(Enum):
     """Card allegiances"""
 
-    NONE = auto()
-    IMPERIAL = auto()  # yellow
-    MACHINE = auto()  # red
-    FEDERATION = auto()  # blue
-    BLOB = auto()  # green
+    NONE = "."
+    IMPERIAL = "IMPERIAL"  # yellow
+    MACHINE = "MACHINE"  # red
+    FEDERATION = "FEDERATION"  # blue
+    BLOB = "BLOB"  # green
 
 
 class Rule(Enum):
     """When an [ActionType][models.enums.ActionType] can be played."""
 
-    ALWAYS = auto()
-    ALLY = auto()
-    SCRAP = auto()
+    ALWAYS = "ALWAYS"
+    ALLY = "ALLY"
+    SCRAP = "SCRAP"
 
 
 class CardType(Enum):
-    BASE = auto()
-    SHIP = auto()
-    OUTPOST = auto()
+    BASE = "BASE"
+    SHIP = "SHIP"
+    OUTPOST = "OUTPOST"
 
 
 class ActionType(Enum):
