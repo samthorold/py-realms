@@ -1,5 +1,4 @@
 import logging
-from models.enums import ActionType
 
 from models.game import Game
 

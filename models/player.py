@@ -1,6 +1,5 @@
 import logging
 from random import shuffle
-from cards.deck import PLAYER_STARTING_DECK
 
 from models.card import Card
 from models.enums import CardType, Faction

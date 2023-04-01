@@ -71,10 +71,10 @@ class Game:
     def hydrate_action(self, action: Action | ActionType | str) -> Action:
         if isinstance(action, str):
             action = ActionType.from_str(action)
-            logger.debug(f"%r", action)
+            logger.debug("%r", action)
         if isinstance(action, ActionType):
             action = Action(type=action)
-            logger.debug(f"%r", action)
+            logger.debug("%r", action)
         return action
 
     def add_action(self, action: Action) -> None:
@@ -131,7 +131,7 @@ class Game:
         logger.info("%r start action", pl.name)
         # raises UnknownActionType
         action = self.hydrate_action(action)
-        logger.debug(f"idx=%s action=%r", idx, action)
+        logger.debug("idx=%s action=%r", idx, action)
         match action:
             case Action(type=ActionType.START_GAME, n=_, rule=_, faction=_):
                 for _ in range(self._hand_size):
