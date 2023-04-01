@@ -17,6 +17,19 @@ def test_init(deck: Deck) -> None:
     assert deck.trade_row
 
 
+def test_draw_never_goes_above_5_cards_in_trade_row() -> None:
+    deck = Deck()
+    for _ in range(25):
+        deck.draw()
+    assert len(deck.trade_row) == 5
+
+
+def test_draw_with_no_trade_deck_noop() -> None:
+    deck = Deck()
+    deck.trade_deck = []
+    deck.draw()
+
+
 def test_acquire(deck: Deck) -> None:
     og_deck = len(deck.trade_deck)
     card = deck.acquire(0)

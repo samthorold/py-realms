@@ -8,13 +8,14 @@ class Card:
 
         >>> from models.action import Action
         >>> from models.enums import ActionType, CardType, Faction, Rule
-        >>> card = Card(
+        >>> Card(
         ...     name="scout",
         ...     type=CardType.SHIP,
         ...     faction=Faction.NONE,
         ...     cost=0,
         ...     actions=[Action(n=1, type=ActionType.AUTHORITY, rule=Rule.ALWAYS)],
         ... )
+        <Card(name=scout, type=CardType.SHIP, faction=Faction.NONE, cost=0, actions=(<Action(type=ActionType.AUTHORITY, n=1, rule=Rule.ALWAYS, faction=Faction.NONE)>,), defense=0)>
 
 
     """
