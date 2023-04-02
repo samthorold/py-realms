@@ -12,6 +12,9 @@ def test_play() -> None:
     game = Game()
     game.action("START_GAME")
     game.action("play", idx=0)
+    pl = game.get_current_player()
+    assert len(pl._hand) < 5
+    assert len(pl._in_play) > 0
 
 
 def test_unknown_action() -> None:
