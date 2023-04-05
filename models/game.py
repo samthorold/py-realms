@@ -8,7 +8,7 @@ from models.card import Card
 from models.deck import Deck
 from models.enums import ActionType, CardType, Faction, Rule
 from models.exceptions import UnknownAction
-from models.player import Player
+from models.player import Player, PlayerInterface
 
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,9 @@ logger = logging.getLogger(__name__)
 def player_setup(
     name: str, draw: int = 0, starting_deck: Sequence[Card] | None = None
 ) -> Player:
-    starting_deck = PLAYER_STARTING_DECK if starting_deck is None else starting_deck
+    starting_deck = (
+        PLAYER_STARTING_DECK if starting_deck is None else starting_deck
+    )
     deck = list(starting_deck)
     logger.debug("%s setup deck %s", name, deck)
     shuffle(deck)
@@ -44,7 +46,7 @@ class Game:
     def __init__(
         self,
         deck: Deck | None = None,
-        players: tuple[Player, Player] | None = None,
+        players: tuple[PlayerInterface, PlayerInterface] | None = None,
         hand_size: int = 5,
         first_hand_size: int = 3,
         current_player: int = 0,
@@ -65,7 +67,7 @@ class Game:
         self._first_hand_size = first_hand_size
         self._current_player = current_player
 
-    def get_current_player(self) -> Player:
+    def get_current_player(self) -> PlayerInterface:
         return self._players[self._current_player]
 
     def hydrate_action(self, action: Action | ActionType | str) -> Action:
@@ -94,7 +96,7 @@ class Game:
         self.add_action(action.as_always())
         self.remove_action(action)
 
-    def replace_ally_actions(self, pl: Player, faction: Faction) -> None:
+    def replace_ally_actions(self, pl: PlayerInterface, faction: Faction) -> None:
         actions = [
             action
             for action in self._actions
@@ -104,8 +106,7 @@ class Game:
             if pl.ally_in_play(faction):
                 self.replace_action_with_always(action)
 
-    def replace_scrap_actions(self, pl: Player, card: Card) -> None:
-
+    def replace_scrap_actions(self, pl: PlayerInterface, card: Card) -> None:
         actions = [
             action
             for action in self._actions
@@ -134,7 +135,7 @@ class Game:
 
         """
         pl = self.get_current_player()
-        logger.info("%r start action", pl.name)
+        logger.info("%s start action", pl)
         # raises UnknownActionType
         action = self.hydrate_action(action)
         logger.debug("idx=%s action=%r", idx, action)
@@ -153,30 +154,38 @@ class Game:
                 self.add_card_actions(card)
                 self.replace_ally_actions(pl, card.faction)
 
-            case Action(type=ActionType.ACQUIRE, n=_, rule=Rule.ALWAYS, faction=_):
+            case Action(
+                type=ActionType.ACQUIRE, n=_, rule=Rule.ALWAYS, faction=_
+            ):
                 card = self.trade_deck.acquire(idx)
                 top_of_deck = (
                     any(
-                        a.type == ActionType.NEXT_SHIP_TOP_OF_DECK and a.rule == Rule.ALWAYS
+                        a.type == ActionType.NEXT_SHIP_TOP_OF_DECK
+                        and a.rule == Rule.ALWAYS
                         for a in self._actions
-                    ) and card.type == CardType.SHIP
+                    )
+                    and card.type == CardType.SHIP
                 )
                 pl.acquire(card, top_of_deck)
 
             case Action(type=ActionType.SCRAP_IN_PLAY, n=_, rule=_):
                 # not really a rule for doing this
                 # but the card needs to have an action with a SCRAP rule.
-                card = pl._in_play[idx]
+                card = pl.in_play[idx]
                 self.replace_scrap_actions(pl, card)
 
             case Action(type=ActionType.DRAW, n=n, rule=Rule.ALWAYS, faction=_):
                 for _ in range(n):
                     pl.draw()
 
-            case Action(type=ActionType.COMBAT, n=n, rule=Rule.ALWAYS, faction=_):
+            case Action(
+                type=ActionType.COMBAT, n=n, rule=Rule.ALWAYS, faction=_
+            ):
                 pl.add_combat(n)
 
-            case Action(type=ActionType.TRADE, n=n, rule=Rule.ALWAYS, faction=_):
+            case Action(
+                type=ActionType.TRADE, n=n, rule=Rule.ALWAYS, faction=_
+            ):
                 pl.add_trade(n)
 
             case _:
@@ -184,4 +193,4 @@ class Game:
 
         self.remove_action(action)
 
-        logger.info("%r end action", pl.name)
+        logger.info("%s end action", pl)

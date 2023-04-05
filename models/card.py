@@ -34,12 +34,14 @@ class Card:
         self.faction = faction
         self.cost = cost
         self.actions = tuple(
-            Action(type=a.type, n=a.n, rule=a.rule, faction=faction) for a in actions
+            Action(type=a.type, n=a.n, rule=a.rule, faction=faction)
+            for a in actions
         )
         self.defense = defense
 
     def __repr__(self) -> str:
         return (
-            f"<Card(name={self.name}, type={self.type}, faction={self.faction}, "
-            f"cost={self.cost}, actions={self.actions}, defense={self.defense})>"
+            f"<Card(name={self.name}, type={self.type}, faction={self.faction},"
+            f" cost={self.cost}, actions={self.actions},"
+            f" defense={self.defense})>"
         )

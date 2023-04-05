@@ -1,6 +1,6 @@
 check:
 	flake8 .
-	black . --check
+	black . --preview --check
 	mypy .
 
 test: check
