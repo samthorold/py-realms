@@ -96,7 +96,9 @@ class Game:
         self.add_action(action.as_always())
         self.remove_action(action)
 
-    def replace_ally_actions(self, pl: PlayerInterface, faction: Faction) -> None:
+    def replace_ally_actions(
+        self, pl: PlayerInterface, faction: Faction
+    ) -> None:
         actions = [
             action
             for action in self._actions

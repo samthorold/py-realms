@@ -1,6 +1,10 @@
 import pytest
+
+from cards.factionless import SCOUT, VIPER
+from models.card import Card
 from models.exceptions import UnknownActionType
 from models.game import Game
+from models.player import Player
 
 
 def test_game_init() -> None:
@@ -8,7 +12,18 @@ def test_game_init() -> None:
     assert len(game._players) == 2
 
 
-def test_play() -> None:
+@pytest.mark.parametrize(
+    "hand",
+    (
+        [SCOUT] * 3,
+        [SCOUT] * 2 + [VIPER],
+        [SCOUT] + [VIPER] * 2,
+        [VIPER] * 3,
+        [VIPER] * 2 + [SCOUT],
+        [VIPER] + [SCOUT] * 2,
+    ),
+)
+def test_play(hand: list[Card] | None) -> None:
     """Play action updates game state as expected.
 
     - One less card in hand.
@@ -17,7 +32,9 @@ def test_play() -> None:
 
     """
 
-    game = Game()
+    players = (Player("", hand=hand), Player(""))
+
+    game = Game(players=players)
     game.action("START_GAME")
     pl = game.get_current_player()
 
