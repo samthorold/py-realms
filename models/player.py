@@ -183,7 +183,7 @@ class Player:
         if not self._hand:
             logger.debug("%s no cards to play (%s)", self.name, idx)
             raise ValueError("No cards to play")
-        card = self._hand.pop()
+        card = self._hand.pop(idx)
         logger.debug("%s play %s", self.name, card)
         self._in_play.append(card)
         return card
