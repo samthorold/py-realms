@@ -104,17 +104,23 @@ class Game:
             if pl.ally_in_play(faction):
                 self.replace_action_with_always(action)
 
-    def replace_actions(self, player: Player) -> None:
-        for faction in Faction:
-            self.replace_ally_actions(player, faction)
+    def replace_scrap_actions(self, pl: Player, card: Card) -> None:
+
+        actions = [
+            action
+            for action in self._actions
+            if action.rule == Rule.SCRAP and action in card.actions
+        ]
+        for action in actions:
+            self.replace_action_with_always(action)
 
     def action(self, action: Action | ActionType | str, idx: int = 0) -> None:
-        """Execute one action.
+        """Perform one action.
 
         Actions may lead to more actions being placed in the backlog.
 
         Args:
-            action: Action to execute.
+            action: Action to perform.
             idx: Position in the player deck, trade row, etc.
 
         Returns:
@@ -145,19 +151,23 @@ class Game:
             case Action(type=ActionType.PLAY, n=_, rule=_, faction=_):
                 card = pl.play(idx)
                 self.add_card_actions(card)
-                self.replace_actions(pl)
+                self.replace_ally_actions(pl, card.faction)
 
             case Action(type=ActionType.ACQUIRE, n=_, rule=Rule.ALWAYS, faction=_):
                 card = self.trade_deck.acquire(idx)
                 top_of_deck = (
                     any(
-                        a.type == ActionType.NEXT_SHIP_TOP_OF_DECK
-                        and a.rule == Rule.ALWAYS
+                        a.type == ActionType.NEXT_SHIP_TOP_OF_DECK and a.rule == Rule.ALWAYS
                         for a in self._actions
-                    )
-                    and card.type == CardType.SHIP
+                    ) and card.type == CardType.SHIP
                 )
                 pl.acquire(card, top_of_deck)
+
+            case Action(type=ActionType.SCRAP_IN_PLAY, n=_, rule=_):
+                # not really a rule for doing this
+                # but the card needs to have an action with a SCRAP rule.
+                card = pl._in_play[idx]
+                self.replace_scrap_actions(pl, card)
 
             case Action(type=ActionType.DRAW, n=n, rule=Rule.ALWAYS, faction=_):
                 for _ in range(n):

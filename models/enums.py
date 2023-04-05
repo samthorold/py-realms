@@ -35,6 +35,8 @@ class ActionType(Enum):
     COMBAT = "COMBAT"  # accrue the combat saved up
     AUTHORITY = "AUTHORITY"  # use authority
     SCRAP_TRADE = "SCRAP_TRADE"
+    SCRAP_HAND_OR_DISCARD = "SCRAP_HAND_OR_DISCARD"
+    SCRAP_IN_PLAY = "SCRAP_IN_PLAY"
     ACQUIRE_TOP = "ACQUIRE_TOP"
     DESTROY_BASE = "DESTROY_BASE"
     DRAW = "DRAW"

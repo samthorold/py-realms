@@ -9,6 +9,14 @@ def test_game_init() -> None:
 
 
 def test_play() -> None:
+    """Play action updates game state as expected.
+
+    - One less card in hand.
+    - One more card in play.
+    - Card actions added to game actions.
+
+    """
+
     game = Game()
     game.action("START_GAME")
     pl = game.get_current_player()
@@ -24,13 +32,17 @@ def test_play() -> None:
     og_hand_count = len([c for c in og_hand if c == card])
     og_in_play_count = len([c for c in og_in_play if c == card])
 
+    # perform the action
     game.action("play", idx=0)
 
+    # get the player's hand after the action
     new_hand_count = len([c for c in pl._hand if c == card])
     new_in_play_count = len([c for c in pl._in_play if c == card])
 
-    assert len(pl._hand) < 3 and new_hand_count < og_hand_count, card
-    assert len(pl._in_play) > 0 and new_in_play_count > og_in_play_count, card
+    # check state
+    # TODO: fails when card is a viper
+    assert len(pl._hand) < 3 and new_hand_count == (og_hand_count - 1), card
+    assert len(pl._in_play) > 0 and new_in_play_count == (og_in_play_count + 1), card
     assert all(c in game._actions for c in card.actions), card.actions
 
 
