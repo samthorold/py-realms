@@ -25,10 +25,10 @@ def test_game_init() -> None:
 def test_action_start_game() -> None:
     """Start game action updates game state as expected.
 
-    - 
+    -
     """
 
-    expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)]*3
+    expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 3
     game = Game(first_hand_size=3)
     game.action("start_game")
     assert game._actions == expected
