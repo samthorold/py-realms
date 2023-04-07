@@ -3,8 +3,16 @@ import pytest
 from cards.factionless import SCOUT, VIPER
 from models.card import Card
 from models.exceptions import UnknownActionType
-from models.game import Game
+from models.game import Game, player_setup
 from models.player import Player
+
+
+def test_player_setup() -> None:
+    got = player_setup("")
+    assert isinstance(got, Player)
+    assert len(got.deck) == 10
+    assert not got.hand
+    assert not got.in_play
 
 
 def test_game_init() -> None:

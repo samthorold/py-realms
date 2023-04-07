@@ -1,73 +1,11 @@
 import logging
 from random import shuffle
-from typing import Protocol
 
 from models.card import Card
 from models.enums import CardType, Faction
 
 
 logger = logging.getLogger(__name__)
-
-
-class PlayerInterface(Protocol):
-    @property
-    def in_play(self) -> tuple[Card, ...]:
-        ...
-
-    @property
-    def hand(self) -> tuple[Card, ...]:
-        ...
-
-    @property
-    def ships_in_play(self) -> tuple[Card, ...]:
-        ...
-
-    @property
-    def bases_in_play(self) -> tuple[Card, ...]:
-        ...
-
-    @property
-    def outposts_in_play(self) -> tuple[Card, ...]:
-        ...
-
-    def add_combat(self, combat: int) -> int:
-        ...
-
-    def get_authority(self) -> int:
-        ...
-
-    def add_authority(self, authority: int) -> int:
-        ...
-
-    def add_trade(self, trade: int) -> int:
-        ...
-
-    def ally_in_play(self, faction: Faction) -> bool:
-        ...
-
-    def discard_from_hand(self, idx: int) -> None:
-        ...
-
-    def scrap_from_hand(self, idx: int) -> None:
-        ...
-
-    def scrap_from_discard_pile(self, idx: int) -> None:
-        ...
-
-    def scrap_from_trade_row(self, idx: int) -> int:
-        ...
-
-    def draw(self) -> None:
-        ...
-
-    def play(self, idx: int) -> Card:
-        ...
-
-    def acquire(self, card: Card, top_of_deck: bool = False) -> None:
-        ...
-
-    def new_hand(self) -> None:
-        ...
 
 
 class Player:
@@ -116,6 +54,14 @@ class Player:
     @property
     def hand(self) -> tuple[Card, ...]:
         return tuple(self._hand)
+
+    @property
+    def deck(self) -> tuple[Card, ...]:
+        return tuple(self._deck)
+
+    @property
+    def discard_pile(self) -> tuple[Card, ...]:
+        return tuple(self._discard_pile)
 
     @property
     def ships_in_play(self) -> tuple[Card, ...]:

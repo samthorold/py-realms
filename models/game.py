@@ -8,7 +8,7 @@ from models.card import Card
 from models.deck import Deck
 from models.enums import ActionType, CardType, Faction, Rule
 from models.exceptions import UnknownAction
-from models.player import Player, PlayerInterface
+from models.player import Player
 
 
 logger = logging.getLogger(__name__)
@@ -17,6 +17,17 @@ logger = logging.getLogger(__name__)
 def player_setup(
     name: str, draw: int = 0, starting_deck: Sequence[Card] | None = None
 ) -> Player:
+    """Default player starting state.
+
+    Args:
+        name: Player's display name.
+        draw: How many cards to draw.
+        starting_deck: Optional deck to setup player with.
+            Defaults to the standard starting deck of scouts and vipers.
+
+    Returns:
+        Player
+    """
     starting_deck = (
         PLAYER_STARTING_DECK if starting_deck is None else starting_deck
     )
@@ -46,7 +57,7 @@ class Game:
     def __init__(
         self,
         deck: Deck | None = None,
-        players: tuple[PlayerInterface, PlayerInterface] | None = None,
+        players: tuple[Player, Player] | None = None,
         hand_size: int = 5,
         first_hand_size: int = 3,
         current_player: int = 0,
@@ -67,7 +78,7 @@ class Game:
         self._first_hand_size = first_hand_size
         self._current_player = current_player
 
-    def get_current_player(self) -> PlayerInterface:
+    def get_current_player(self) -> Player:
         return self._players[self._current_player]
 
     def hydrate_action(self, action: Action | ActionType | str) -> Action:
@@ -96,9 +107,7 @@ class Game:
         self.add_action(action.as_always())
         self.remove_action(action)
 
-    def replace_ally_actions(
-        self, pl: PlayerInterface, faction: Faction
-    ) -> None:
+    def replace_ally_actions(self, pl: Player, faction: Faction) -> None:
         actions = [
             action
             for action in self._actions
@@ -108,7 +117,7 @@ class Game:
             if pl.ally_in_play(faction):
                 self.replace_action_with_always(action)
 
-    def replace_scrap_actions(self, pl: PlayerInterface, card: Card) -> None:
+    def replace_scrap_actions(self, pl: Player, card: Card) -> None:
         actions = [
             action
             for action in self._actions
