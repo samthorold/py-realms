@@ -1,7 +1,9 @@
 import pytest
 
 from cards.factionless import SCOUT, VIPER
+from models.action import Action
 from models.card import Card
+from models.enums import ActionType, Rule
 from models.exceptions import UnknownActionType
 from models.game import Game, player_setup
 from models.player import Player
@@ -20,6 +22,18 @@ def test_game_init() -> None:
     assert len(game._players) == 2
 
 
+def test_action_start_game() -> None:
+    """Start game action updates game state as expected.
+
+    - 
+    """
+
+    expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)]*3
+    game = Game(first_hand_size=3)
+    game.action("start_game")
+    assert game._actions == expected
+
+
 @pytest.mark.parametrize(
     "hand",
     (
@@ -31,7 +45,7 @@ def test_game_init() -> None:
         [VIPER] + [SCOUT] * 2,
     ),
 )
-def test_play(hand: list[Card] | None) -> None:
+def test_action_play(hand: list[Card] | None) -> None:
     """Play action updates game state as expected.
 
     - One less card in hand.

@@ -159,12 +159,12 @@ class Game:
         logger.debug("idx=%s action=%r", idx, action)
         match action:
             case Action(type=ActionType.START_GAME, n=_, rule=_, faction=_):
-                for _ in range(self._hand_size):
+                for _ in range(self._first_hand_size):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.START_TURN, n=_, rule=_, faction=_):
                 pl.new_hand()
-                for _ in range(self._first_hand_size):
+                for _ in range(self._hand_size):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.PLAY, n=_, rule=_, faction=_):
