@@ -13,7 +13,7 @@ class Player:
     Examples:
 
         >>> player = Player(name="Player 1")
-        >>> player.get_authority()
+        >>> player.authority
         50
 
 
@@ -79,6 +79,10 @@ class Player:
     def outposts_in_play(self) -> tuple[Card, ...]:
         return tuple(c for c in self._in_play if c.type == CardType.OUTPOST)
 
+    @property
+    def authority(self) -> int:
+        return self._authority
+
     def add_combat(self, combat: int) -> int:
         logger.debug(
             "%s adding %s combat to %s", self.name, combat, self._combat
@@ -86,9 +90,6 @@ class Player:
         self._combat += combat
         logger.debug("%s combat %s", self.name, self._combat)
         return self._combat
-
-    def get_authority(self) -> int:
-        return self._authority
 
     def add_authority(self, authority: int) -> int:
         logger.debug(
