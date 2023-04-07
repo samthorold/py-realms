@@ -43,10 +43,9 @@ class ActionType(Enum):
     PLAY = "PLAY"  # play a card from hand
     ACQUIRE = "ACQUIRE"  # acquire a card from the trade row
     ATTACK = "ATTACK"  # use the combat saved up
-    START_GAME = (  # get 3 PLAY actions and perhaps more in the future
-        "START_GAME"
-    )
+    START_GAME = "START_GAME"  # get 3 PLAY actions
     START_TURN = "START_TURN"  # get 5 PLAY actions
+    END_TURN = "END_TURN"
     OPPONENT_DISCARD = "OPPONENT_DISCARD"
     DISCARD = "DISCARD"
     NEXT_SHIP_TOP_OF_DECK = "NEXT_SHIP_TOP_OF_DECK"
