@@ -7,7 +7,7 @@ from models.action import Action
 from models.card import Card
 from models.deck import Deck
 from models.enums import ActionType, CardType, Faction, Rule
-from models.exceptions import UnknownAction
+from models.exceptions import UnknownAction, ActionUnavailable
 from models.player import Player
 
 
@@ -68,6 +68,7 @@ class Game:
         hand_size: int = 5,
         first_hand_size: int = 3,
         current_player: int = 0,
+        actions: Sequence[Action] | None = None,
     ) -> None:
         self.trade_deck = deck_setup() if deck is None else deck
         self._players = (
@@ -80,7 +81,11 @@ class Game:
             if players is None
             else players
         )
-        self._actions = [Action(type=ActionType.START_GAME)]
+        self._actions = (
+            [Action(type=ActionType.START_GAME)]
+            if actions is None
+            else list(actions)
+        )
         self._hand_size = hand_size
         self._first_hand_size = first_hand_size
         self._current_player = current_player
@@ -90,6 +95,7 @@ class Game:
 
     def hydrate_action(self, action: Action | ActionType | str) -> Action:
         if isinstance(action, str):
+            # raises UnknownActionType
             action = ActionType.from_str(action)
             logger.debug("%r", action)
         if isinstance(action, ActionType):
@@ -146,6 +152,7 @@ class Game:
             None
 
         Raises:
+            ActionUnavailable: The action cannot be performed.
             UnknownActionType: The action type is not specified in the
                 [ActionType][models.enums.ActionType] enum.
             UnknownAction: The action is not in the match statement
@@ -156,6 +163,9 @@ class Game:
         logger.info("%s start action", pl)
         # raises UnknownActionType
         action = self.hydrate_action(action)
+        if action not in self._actions:
+            logger.info("%r not available", action)
+            raise ActionUnavailable(f"{action} not available")
         logger.debug("idx=%s action=%r", idx, action)
         match action:
             case Action(type=ActionType.START_GAME, n=_, rule=_, faction=_):

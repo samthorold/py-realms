@@ -4,3 +4,7 @@ class UnknownActionType(Exception):
 
 class UnknownAction(Exception):
     """Unknown action."""
+
+
+class ActionUnavailable(Exception):
+    """Action cannot be performed."""

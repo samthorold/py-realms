@@ -25,12 +25,24 @@ def test_game_init() -> None:
 def test_action_start_game() -> None:
     """Start game action updates game state as expected.
 
-    -
+    - Three play actions.
     """
 
     expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 3
     game = Game(first_hand_size=3)
     game.action("start_game")
+    assert game._actions == expected
+
+
+def test_action_start_turn() -> None:
+    """Start turn action updates game state as expected.
+
+    - Five play actions.
+    """
+
+    expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 5
+    game = Game(hand_size=5, actions=[Action(type=ActionType.START_TURN)])
+    game.action("start_turn")
     assert game._actions == expected
 
 
