@@ -47,6 +47,11 @@ def player_setup(
 
 
 def deck_setup() -> Deck:
+    """Default deck starting state. Draws five cards to the trade deck.
+
+    Returns:
+        Deck
+    """
     deck = Deck()
     for _ in range(5):
         deck.draw()
