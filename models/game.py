@@ -19,6 +19,10 @@ def player_setup(
 ) -> Player:
     """Default player starting state.
 
+    Players know what is in the opponent's deck at all times but not their hand.
+    At least this is the case in the online version of the game.
+    So by default, don't draw any cards to the hand when setting up a player.
+
     Args:
         name: Player's display name.
         draw: How many cards to draw.
@@ -34,8 +38,6 @@ def player_setup(
     deck = list(starting_deck)
     logger.debug("%s setup deck %s", name, deck)
     shuffle(deck)
-    # players know what is in the opponent's deck at all times (at least online).
-    # so don't draw the cards until the start of a player's turn.
     if draw:
         hand, deck = deck[:draw], deck[draw:]
     else:
