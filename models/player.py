@@ -83,6 +83,14 @@ class Player:
     def authority(self) -> int:
         return self._authority
 
+    @property
+    def combat(self) -> int:
+        return self._combat
+
+    @property
+    def trade(self) -> int:
+        return self._trade
+
     def add_combat(self, combat: int) -> int:
         logger.debug(
             "%s adding %s combat to %s", self.name, combat, self._combat
@@ -153,10 +161,13 @@ class Player:
         return card
 
     def acquire(self, card: Card, top_of_deck: bool = False) -> None:
+        logger.debug("%s acquire %r (top %s)", self.name, card, top_of_deck)
         if top_of_deck:
             self._deck.append(card)
         else:
             self._discard_pile.append(card)
+        self._trade -= card.cost
+        logger.debug("%s trade %s", self.name, self.trade)
 
     def new_hand(self) -> None:
         logger.debug("%s new hand", self.name)

@@ -46,6 +46,54 @@ def test_action_start_turn() -> None:
     assert game._actions == expected
 
 
+def test_action_acquire() -> None:
+    """Acquire action updates game state as expected.
+
+    - Player's discard pile contains the acquired card.
+    - Player's trade reduced by cost of the acquired card.
+    - Trade row no longer contains the acquired card.
+    - Trade row contains five cards.
+    """
+
+    starting_trade = 100
+    acquire_idx = 0
+
+    players = [
+        Player("", trade=starting_trade),
+        Player(""),
+    ]
+    actions = [Action(type=ActionType.ACQUIRE)]
+    game = Game(players=players, actions=actions)
+    pl = game._players[0]
+    card = game.trade_deck.trade_row[acquire_idx]
+    # may draw the same card again from the trade deck
+    # so count of acquired card in the trade row will be the same.
+    og_count = len(
+        [
+            c
+            for c in game.trade_deck.trade_row + game.trade_deck.trade_deck
+            if c == card
+        ]
+    )
+
+    assert card not in pl.discard_pile
+
+    game.action("acquire", acquire_idx)
+
+    assert pl.discard_pile[-1] == card
+    assert pl.trade == (starting_trade - card.cost)
+
+    new_count = len(
+        [
+            c
+            for c in game.trade_deck.trade_row + game.trade_deck.trade_deck
+            if c == card
+        ]
+    )
+    assert new_count == (og_count - 1)
+    assert len(game.trade_deck.trade_row) == 5
+
+
 @pytest.mark.parametrize(
     "hand",
     (
