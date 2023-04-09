@@ -26,7 +26,7 @@ class Card:
         type: CardType,
         faction: Faction,
         cost: int,
-        actions: tuple[Action, ...],
+        actions: tuple[Action, ...] = tuple(),
         defense: int = 0,
     ):
         self.name = name

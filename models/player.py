@@ -114,7 +114,7 @@ class Player:
         return self._trade
 
     def ally_in_play(self, faction: Faction) -> bool:
-        return any(faction == c.faction for c in self._in_play)
+        return any(c.faction in (faction, Faction.ALL) for c in self._in_play)
 
     def discard_from_hand(self, idx: int) -> None:
         logger.debug("%s discarding from hand %s", self.name, idx)
@@ -158,6 +158,7 @@ class Player:
         card = self._hand.pop(idx)
         logger.debug("%s play %s", self.name, card)
         self._in_play.append(card)
+        # adding trade and combat etc. are actions and handled by `Game`.
         return card
 
     def acquire(self, card: Card, top_of_deck: bool = False) -> None:

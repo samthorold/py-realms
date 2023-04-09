@@ -58,10 +58,10 @@ def test_action_acquire() -> None:
     starting_trade = 100
     acquire_idx = 0
 
-    players = [
+    players = (
         Player("", trade=starting_trade),
         Player(""),
-    ]
+    )
     actions = [Action(type=ActionType.ACQUIRE)]
     game = Game(players=players, actions=actions)
     pl = game._players[0]

@@ -12,6 +12,7 @@ class Faction(Enum):
     MACHINE = "MACHINE"  # red
     FEDERATION = "FEDERATION"  # blue
     BLOB = "BLOB"  # green
+    ALL = "ALL"
 
 
 class Rule(Enum):
@@ -36,10 +37,12 @@ class ActionType(Enum):
     AUTHORITY = "AUTHORITY"  # use authority
     SCRAP_TRADE = "SCRAP_TRADE"
     SCRAP_HAND_OR_DISCARD = "SCRAP_HAND_OR_DISCARD"
+    SCRAP_HAND_OR_DISCARD_THEN_DRAW = "SCRAP_HAND_OR_DISCARD_THEN_DRAW"
     SCRAP_IN_PLAY = "SCRAP_IN_PLAY"
     ACQUIRE_TOP = "ACQUIRE_TOP"
     DESTROY_BASE = "DESTROY_BASE"
     DRAW = "DRAW"
+    DRAW_THEN_SCRAP_FROM_HAND = "DRAW_THEN_SCRAP_FROM_HAND"
     PLAY = "PLAY"  # play a card from hand
     ACQUIRE = "ACQUIRE"  # acquire a card from the trade row
     ATTACK = "ATTACK"  # use the combat saved up
@@ -49,6 +52,8 @@ class ActionType(Enum):
     OPPONENT_DISCARD = "OPPONENT_DISCARD"
     DISCARD = "DISCARD"
     NEXT_SHIP_TOP_OF_DECK = "NEXT_SHIP_TOP_OF_DECK"
+    TRADE_3_OR_COMBAT_5 = "TRADE_3_OR_COMBAT_5"
+    COPY_CARD = "COPY_CARD"
 
     @classmethod
     def from_str(cls, string: str) -> ActionType:
