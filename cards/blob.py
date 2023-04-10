@@ -52,3 +52,68 @@ BLOB_DESTROYER = Card(
         Action(n=1, type=ActionType.DESTROY_BASE, rule=Rule.ALLY),
     ),
 )
+
+
+BLOB_FIGHTER = Card(
+    name="blob fighter",
+    cost=1,
+    type=CardType.SHIP,
+    faction=Faction.BLOB,
+    actions=(
+        Action(n=3, type=ActionType.COMBAT, rule=Rule.ALWAYS),
+        Action(n=1, type=ActionType.DRAW, rule=Rule.ALLY),
+    ),
+)
+
+
+BLOB_WHEEL = Card(
+    name="blob wheel",
+    cost=3,
+    type=CardType.BASE,
+    faction=Faction.BLOB,
+    actions=(
+        Action(n=1, type=ActionType.COMBAT, rule=Rule.ALWAYS),
+        Action(n=3, type=ActionType.TRADE, rule=Rule.SCRAP),
+    ),
+)
+
+
+BLOB_WORLD = Card(
+    name="blob world",
+    cost=8,
+    type=CardType.BASE,
+    faction=Faction.BLOB,
+    actions=(
+        Action(
+            n=1,
+            type=ActionType.COMBAT_5_OR_DRAW_FOR_EACH_BLOB,
+            rule=Rule.ALWAYS,
+        ),
+    ),
+)
+
+
+MOTHERSHIP = Card(
+    name="mothership",
+    cost=7,
+    type=CardType.SHIP,
+    faction=Faction.BLOB,
+    actions=(
+        Action(n=6, type=ActionType.COMBAT, rule=Rule.ALWAYS),
+        Action(n=1, type=ActionType.DRAW, rule=Rule.ALWAYS),
+        Action(n=1, type=ActionType.DRAW, rule=Rule.ALLY),
+    ),
+)
+
+
+RAM = Card(
+    name="ram",
+    cost=3,
+    type=CardType.SHIP,
+    faction=Faction.BLOB,
+    actions=(
+        Action(n=5, type=ActionType.COMBAT, rule=Rule.ALWAYS),
+        Action(n=2, type=ActionType.COMBAT, rule=Rule.ALLY),
+        Action(n=3, type=ActionType.TRADE, rule=Rule.SCRAP),
+    ),
+)

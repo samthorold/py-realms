@@ -1,4 +1,14 @@
-from cards.blob import BATTLE_BLOB, BATTLE_POD, BLOB_CARRIER, BLOB_DESTROYER
+from cards.blob import (
+    BATTLE_BLOB,
+    BATTLE_POD,
+    BLOB_CARRIER,
+    BLOB_DESTROYER,
+    BLOB_FIGHTER,
+    BLOB_WHEEL,
+    BLOB_WORLD,
+    MOTHERSHIP,
+    RAM,
+)
 from cards.factionless import SCOUT, VIPER
 from cards.federation import CUTTER, FEDERATION_SHUTTLE
 from cards.machine import (
@@ -26,10 +36,10 @@ game_starting_deck = [
     (BATTLE_POD, 2),
     (BLOB_CARRIER, 1),
     (BLOB_DESTROYER, 2),
-    # [BLOB_FIGHTER] * 3 +
-    # [BLOB_WHEEL] * 3 +
-    # [BLOB_WORLD] * 1 +
-    # [MOTHERSHIP] * 1 +
+    (BLOB_FIGHTER, 3),
+    (BLOB_WHEEL, 3),
+    (BLOB_WORLD, 1),
+    (MOTHERSHIP, 1),
     (BATTLE_MECH, 1),
     (BATTLE_STATION, 2),
     (BRAIN_WORLD, 1),
