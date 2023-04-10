@@ -71,6 +71,7 @@ BLOB_WHEEL = Card(
     cost=3,
     type=CardType.BASE,
     faction=Faction.BLOB,
+    defense=5,
     actions=(
         Action(n=1, type=ActionType.COMBAT, rule=Rule.ALWAYS),
         Action(n=3, type=ActionType.TRADE, rule=Rule.SCRAP),
@@ -83,6 +84,7 @@ BLOB_WORLD = Card(
     cost=8,
     type=CardType.BASE,
     faction=Faction.BLOB,
+    defense=8,  # not in ss interestingly
     actions=(
         Action(
             n=1,

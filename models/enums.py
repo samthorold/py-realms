@@ -55,6 +55,8 @@ class ActionType(Enum):
     TRADE_3_OR_COMBAT_5 = "TRADE_3_OR_COMBAT_5"
     COPY_CARD = "COPY_CARD"
     COMBAT_5_OR_DRAW_FOR_EACH_BLOB = "COMBAT_5_OR_DRAW_FOR_EACH_BLOB"
+    DRAW_AND_DESTROY_TARGET_BASE = "DRAW_AND_DESTROY_TARGET_BASE"
+    COMBAT_ON_PLAY_SHIP = "COMBAT_ON_PLAY_SHIP"
 
     @classmethod
     def from_str(cls, string: str) -> ActionType:
