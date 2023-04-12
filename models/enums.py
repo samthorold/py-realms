@@ -21,6 +21,7 @@ class Rule(Enum):
     ALWAYS = "ALWAYS"
     ALLY = "ALLY"
     SCRAP = "SCRAP"
+    BASES_IN_PLAY_2 = "BASES_IN_PLAY_2"
 
 
 class CardType(Enum):
@@ -57,6 +58,9 @@ class ActionType(Enum):
     COMBAT_5_OR_DRAW_FOR_EACH_BLOB = "COMBAT_5_OR_DRAW_FOR_EACH_BLOB"
     DRAW_AND_DESTROY_TARGET_BASE = "DRAW_AND_DESTROY_TARGET_BASE"
     COMBAT_ON_PLAY_SHIP = "COMBAT_ON_PLAY_SHIP"
+    DISCARD_THEN_DRAW = "DISCARD_THEN_DRAW"
+    TRADE_2_OR_AUTHORITY_2 = "TRADE_2_OR_AUTHORITY_2"
+    COMBAT_2_OR_AUTHORITY_3 = "COMBAT_2_OR_AUTHORITY_3"
 
     @classmethod
     def from_str(cls, string: str) -> ActionType:

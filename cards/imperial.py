@@ -82,3 +82,65 @@ IMPERIAL_FRIGATE = Card(
         Action(type=ActionType.DRAW, n=1, rule=Rule.SCRAP),
     ),
 )
+
+
+RECYCLING_STATION = Card(
+    name="recycling station",
+    type=CardType.OUTPOST,
+    faction=Faction.IMPERIAL,
+    cost=4,
+    defense=4,
+    actions=(Action(type=ActionType.DISCARD_THEN_DRAW, n=2, rule=Rule.ALWAYS),),
+)
+
+
+ROYAL_REDOUBT = Card(
+    name="royal redoubt",
+    type=CardType.OUTPOST,
+    faction=Faction.IMPERIAL,
+    cost=6,
+    defense=6,
+    actions=(
+        Action(type=ActionType.COMBAT, n=3, rule=Rule.ALWAYS),
+        Action(type=ActionType.OPPONENT_DISCARD, n=1, rule=Rule.ALLY),
+    ),
+)
+
+
+SPACE_STATION = Card(
+    name="space station",
+    type=CardType.OUTPOST,
+    faction=Faction.IMPERIAL,
+    cost=4,
+    defense=4,
+    actions=(
+        Action(type=ActionType.COMBAT, n=2, rule=Rule.ALWAYS),
+        Action(type=ActionType.COMBAT, n=2, rule=Rule.ALLY),
+        Action(type=ActionType.TRADE, n=4, rule=Rule.SCRAP),
+    ),
+)
+
+
+SURVEY_SHIP = Card(
+    name="survey ship",
+    type=CardType.SHIP,
+    faction=Faction.IMPERIAL,
+    cost=4,
+    actions=(
+        Action(type=ActionType.DRAW, n=1, rule=Rule.ALWAYS),
+        Action(type=ActionType.OPPONENT_DISCARD, n=1, rule=Rule.SCRAP),
+    ),
+)
+
+
+WAR_WORLD = Card(
+    name="war world",
+    type=CardType.OUTPOST,
+    faction=Faction.IMPERIAL,
+    cost=5,
+    defense=4,
+    actions=(
+        Action(type=ActionType.COMBAT, n=3, rule=Rule.ALWAYS),
+        Action(type=ActionType.COMBAT, n=4, rule=Rule.ALLY),
+    ),
+)
