@@ -70,9 +70,7 @@ class Player:
     @property
     def bases_in_play(self) -> tuple[Card, ...]:
         return tuple(
-            c
-            for c in self._in_play
-            if c.type in [CardType.OUTPOST, CardType.BASE]
+            c for c in self._in_play if c.type in [CardType.OUTPOST, CardType.BASE]
         )
 
     @property
@@ -92,17 +90,13 @@ class Player:
         return self._trade
 
     def add_combat(self, combat: int) -> int:
-        logger.debug(
-            "%s adding %s combat to %s", self.name, combat, self._combat
-        )
+        logger.debug("%s adding %s combat to %s", self.name, combat, self._combat)
         self._combat += combat
         logger.debug("%s combat %s", self.name, self._combat)
         return self._combat
 
     def add_authority(self, authority: int) -> int:
-        logger.debug(
-            "%s adding %s authority to %s", self.name, authority, self._combat
-        )
+        logger.debug("%s adding %s authority to %s", self.name, authority, self._combat)
         self._authority += authority
         logger.debug("%s authority %s", self.name, self._authority)
         return self._authority
@@ -121,9 +115,7 @@ class Player:
         card = self._hand.pop(idx)
         logger.debug("%s discarding from hand %r", self.name, card)
         self._discard_pile.append(card)
-        logger.debug(
-            "%s discard pile length %s", self.name, len(self._discard_pile)
-        )
+        logger.debug("%s discard pile length %s", self.name, len(self._discard_pile))
 
     def scrap_from_hand(self, idx: int) -> None:
         logger.debug("%s scrapping from hand %s", self.name, idx)
@@ -141,9 +133,7 @@ class Player:
 
     def draw(self) -> None:
         if not self._deck:
-            logger.debug(
-                "%s shuffling discard pile and moving to deck", self.name
-            )
+            logger.debug("%s shuffling discard pile and moving to deck", self.name)
             self._deck = list(self._discard_pile)
             shuffle(self._deck)
             self._discard_pile = []

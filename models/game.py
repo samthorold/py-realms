@@ -32,9 +32,7 @@ def player_setup(
     Returns:
         Player
     """
-    starting_deck = (
-        PLAYER_STARTING_DECK if starting_deck is None else starting_deck
-    )
+    starting_deck = PLAYER_STARTING_DECK if starting_deck is None else starting_deck
     deck = list(starting_deck)
     logger.debug("%s setup deck %s", name, deck)
     shuffle(deck)
@@ -82,9 +80,7 @@ class Game:
             else players
         )
         self._actions = (
-            [Action(type=ActionType.START_GAME)]
-            if actions is None
-            else list(actions)
+            [Action(type=ActionType.START_GAME)] if actions is None else list(actions)
         )
         self._hand_size = hand_size
         self._first_hand_size = first_hand_size
@@ -182,9 +178,7 @@ class Game:
                 self.add_card_actions(card)
                 self.replace_ally_actions(pl, card.faction)
 
-            case Action(
-                type=ActionType.ACQUIRE, n=_, rule=Rule.ALWAYS, faction=_
-            ):
+            case Action(type=ActionType.ACQUIRE, n=_, rule=Rule.ALWAYS, faction=_):
                 card = self.trade_deck.acquire(idx)
                 top_of_deck = (
                     any(
@@ -206,14 +200,10 @@ class Game:
                 for _ in range(n):
                     pl.draw()
 
-            case Action(
-                type=ActionType.COMBAT, n=n, rule=Rule.ALWAYS, faction=_
-            ):
+            case Action(type=ActionType.COMBAT, n=n, rule=Rule.ALWAYS, faction=_):
                 pl.add_combat(n)
 
-            case Action(
-                type=ActionType.TRADE, n=n, rule=Rule.ALWAYS, faction=_
-            ):
+            case Action(type=ActionType.TRADE, n=n, rule=Rule.ALWAYS, faction=_):
                 pl.add_trade(n)
 
             case _:

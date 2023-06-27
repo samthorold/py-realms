@@ -34,8 +34,7 @@ class Card:
         self.faction = faction
         self.cost = cost
         self.actions = tuple(
-            Action(type=a.type, n=a.n, rule=a.rule, faction=faction)
-            for a in actions
+            Action(type=a.type, n=a.n, rule=a.rule, faction=faction) for a in actions
         )
         self.defense = defense
 

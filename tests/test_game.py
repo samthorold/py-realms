@@ -69,11 +69,7 @@ def test_action_acquire() -> None:
     # may draw the same card again from the trade deck
     # so count of acquired card in the trade row will be the same.
     og_count = len(
-        [
-            c
-            for c in game.trade_deck.trade_row + game.trade_deck.trade_deck
-            if c == card
-        ]
+        [c for c in game.trade_deck.trade_row + game.trade_deck.trade_deck if c == card]
     )
 
     assert card not in pl.discard_pile
@@ -84,11 +80,7 @@ def test_action_acquire() -> None:
     assert pl.trade == (starting_trade - card.cost)
 
     new_count = len(
-        [
-            c
-            for c in game.trade_deck.trade_row + game.trade_deck.trade_deck
-            if c == card
-        ]
+        [c for c in game.trade_deck.trade_row + game.trade_deck.trade_deck if c == card]
     )
     assert new_count == (og_count - 1)
     assert len(game.trade_deck.trade_row) == 5
@@ -141,9 +133,7 @@ def test_action_play(hand: list[Card] | None) -> None:
     # check state
     # TODO: fails when card is a viper
     assert len(pl.hand) < 3 and new_hand_count == (og_hand_count - 1), card
-    assert len(pl.in_play) > 0 and new_in_play_count == (
-        og_in_play_count + 1
-    ), card
+    assert len(pl.in_play) > 0 and new_in_play_count == (og_in_play_count + 1), card
     assert all(c in game._actions for c in card.actions), card.actions
 
 

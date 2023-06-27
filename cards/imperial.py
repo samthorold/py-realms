@@ -12,9 +12,7 @@ BATTLECRUISER = Card(
         Action(type=ActionType.COMBAT, n=5, rule=Rule.ALWAYS),
         Action(type=ActionType.DRAW, n=1, rule=Rule.ALWAYS),
         Action(type=ActionType.OPPONENT_DISCARD, n=1, rule=Rule.ALLY),
-        Action(
-            type=ActionType.DRAW_AND_DESTROY_TARGET_BASE, n=1, rule=Rule.SCRAP
-        ),
+        Action(type=ActionType.DRAW_AND_DESTROY_TARGET_BASE, n=1, rule=Rule.SCRAP),
     ),
 )
 
@@ -51,9 +49,7 @@ FLEET_HQ = Card(
     faction=Faction.IMPERIAL,
     cost=8,
     defense=8,
-    actions=(
-        Action(type=ActionType.COMBAT_ON_PLAY_SHIP, n=1, rule=Rule.ALWAYS),
-    ),
+    actions=(Action(type=ActionType.COMBAT_ON_PLAY_SHIP, n=1, rule=Rule.ALWAYS),),
 )
 
 
