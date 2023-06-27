@@ -61,6 +61,7 @@ class ActionType(Enum):
     DISCARD_THEN_DRAW = "DISCARD_THEN_DRAW"
     TRADE_2_OR_AUTHORITY_2 = "TRADE_2_OR_AUTHORITY_2"
     COMBAT_2_OR_AUTHORITY_3 = "COMBAT_2_OR_AUTHORITY_3"
+    AUTHORITY_1_OR_TRADE_1 = "AUTHORITY_1_OR_TRADE_1"
 
     @classmethod
     def from_str(cls, string: str) -> ActionType:

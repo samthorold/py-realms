@@ -119,3 +119,40 @@ RAM = Card(
         Action(n=3, type=ActionType.TRADE, rule=Rule.SCRAP),
     ),
 )
+
+HIVE = Card(
+    name="the hive",
+    cost=5,
+    type=CardType.BASE,
+    faction=Faction.BLOB,
+    defense=5,
+    actions=(
+        Action(n=3, type=ActionType.COMBAT, rule=Rule.ALWAYS),
+        Action(n=1, type=ActionType.DRAW, rule=Rule.ALLY),
+    ),
+)
+
+TRADE_POD = Card(
+    name="trade pod",
+    cost=2,
+    type=CardType.SHIP,
+    faction=Faction.BLOB,
+    actions=(
+        Action(n=3, type=ActionType.TRADE, rule=Rule.ALWAYS),
+        Action(n=2, type=ActionType.COMBAT, rule=Rule.ALLY),
+    ),
+)
+
+BLOB_DECK = [
+    (BATTLE_BLOB, 1),
+    (BATTLE_POD, 2),
+    (BLOB_CARRIER, 1),
+    (BLOB_DESTROYER, 2),
+    (BLOB_FIGHTER, 3),
+    (BLOB_WHEEL, 3),
+    (BLOB_WORLD, 1),
+    (MOTHERSHIP, 1),
+    (RAM, 2),
+    (HIVE, 1),
+    (TRADE_POD, 3),
+]

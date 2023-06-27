@@ -140,3 +140,18 @@ WAR_WORLD = Card(
         Action(type=ActionType.COMBAT, n=4, rule=Rule.ALLY),
     ),
 )
+
+
+IMPERIAL_DECK = [
+    (BATTLECRUISER, 1),
+    (CORVETTE, 2),
+    (DREADNAUGHT, 1),
+    (FLEET_HQ, 1),
+    (IMPERIAL_FIGHTER, 3),
+    (IMPERIAL_FRIGATE, 3),
+    (RECYCLING_STATION, 2),
+    (ROYAL_REDOUBT, 1),
+    (SPACE_STATION, 2),
+    (SURVEY_SHIP, 3),
+    (WAR_WORLD, 1),
+]

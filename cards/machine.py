@@ -153,3 +153,19 @@ TRADE_BOT = Card(
         Action(type=ActionType.COMBAT, n=2, rule=Rule.ALLY),
     ),
 )
+
+
+MACHINE_DECK = [
+    (BATTLE_MECH, 1),
+    (BATTLE_STATION, 2),
+    (BRAIN_WORLD, 1),
+    (JUNKYARD, 1),
+    (MACHINE_BASE, 1),
+    (MECH_WORLD, 1),
+    (MISSILE_BOT, 3),
+    (MISSILE_MECH, 1),
+    (PATROL_MECH, 2),
+    (STEALTH_NEEDLE, 1),
+    (SUPPLY_BOT, 3),
+    (TRADE_BOT, 3),
+]
