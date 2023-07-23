@@ -1,8 +1,10 @@
 import pytest
 
+from py_realms.cards.deck import GAME_STARTING_DECK
 from py_realms.cards.factionless import SCOUT, VIPER
 from py_realms.models.action import Action
 from py_realms.models.card import Card
+from py_realms.models.deck import Deck
 from py_realms.models.enums import ActionType, Rule
 from py_realms.models.exceptions import UnknownActionType
 from py_realms.models.game import Game, player_setup
@@ -106,7 +108,7 @@ def test_action_play(hand: list[Card]) -> None:
 
     players = (Player(name="", hand=hand), Player(name=""))
 
-    game = Game(players=players)
+    game = Game(deck=Deck(trade_deck=list(GAME_STARTING_DECK)), players=players)
     game.action("START_GAME")
     pl = game.get_current_player()
 
