@@ -10,6 +10,9 @@ from py_realms.models.card import Card
 logger = logging.getLogger(__name__)
 
 
+NUM_CARDS_TRADE_DECK = 5
+
+
 def get_shuffled_deck() -> list[Card]:
     deck = list(GAME_STARTING_DECK)
     shuffle(deck)
@@ -54,7 +57,7 @@ class Deck(BaseModel):
 
         """
         if self.trade_deck:
-            if len(self.trade_row) < 5:
+            if len(self.trade_row) < NUM_CARDS_TRADE_DECK:
                 card = self.trade_deck.pop()
                 logger.debug("Deck draw %r", card)
                 self.trade_row.append(card)

@@ -4,10 +4,15 @@ from py_realms.cards.deck import GAME_STARTING_DECK
 from py_realms.cards.factionless import SCOUT, VIPER
 from py_realms.models.action import Action
 from py_realms.models.card import Card
-from py_realms.models.deck import Deck
+from py_realms.models.deck import NUM_CARDS_TRADE_DECK, Deck
 from py_realms.models.enums import ActionType, Rule
 from py_realms.models.exceptions import UnknownActionType
-from py_realms.models.game import Game, player_setup
+from py_realms.models.game import (
+    Game,
+    player_setup,
+    NUM_CARDS_START_GAME,
+    NUM_CARDS_START_TURN,
+)
 from py_realms.models.player import Player
 
 
@@ -30,9 +35,11 @@ def test_action_start_game() -> None:
     - Three play actions.
     """
 
-    expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 3
-    game = Game(first_hand_size=3)
-    game.action("start_game")
+    expected = [
+        Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)
+    ] * NUM_CARDS_START_GAME
+    game = Game()
+    game.action(Action(type=ActionType.START_GAME, n=NUM_CARDS_START_GAME))
     assert game.actions == expected
 
 
@@ -42,9 +49,11 @@ def test_action_start_turn() -> None:
     - Five play actions.
     """
 
-    expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 5
-    game = Game(hand_size=5, actions=[Action(type=ActionType.START_TURN)])
-    game.action("start_turn")
+    expected = [
+        Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)
+    ] * NUM_CARDS_START_TURN
+    game = Game(actions=[Action(type=ActionType.START_TURN, n=NUM_CARDS_START_TURN)])
+    game.action(Action(type=ActionType.START_TURN, n=NUM_CARDS_START_TURN))
     assert game.actions == expected
 
 
@@ -83,7 +92,7 @@ def test_action_acquire() -> None:
         [c for c in game.deck.trade_row + game.deck.trade_deck if c == card]
     )
     assert new_count == (og_count - 1)
-    assert len(game.deck.trade_row) == 5
+    assert len(game.deck.trade_row) == NUM_CARDS_TRADE_DECK
 
 
 @pytest.mark.parametrize(
@@ -109,7 +118,7 @@ def test_action_play(hand: list[Card]) -> None:
     players = (Player(name="", hand=hand), Player(name=""))
 
     game = Game(deck=Deck(trade_deck=list(GAME_STARTING_DECK)), players=players)
-    game.action("START_GAME")
+    game.action(Action(type=ActionType.START_GAME, n=NUM_CARDS_START_GAME))
     pl = game.get_current_player()
 
     # grab the player's hand before the action
@@ -132,7 +141,9 @@ def test_action_play(hand: list[Card]) -> None:
 
     # check state
     # TODO: fails when card is a viper
-    assert len(pl.hand) < 3 and new_hand_count == (og_hand_count - 1), card
+    assert len(pl.hand) < NUM_CARDS_START_GAME and new_hand_count == (
+        og_hand_count - 1
+    ), card
     assert len(pl.in_play) > 0 and new_in_play_count == (og_in_play_count + 1), card
     assert all(c in game.actions for c in card.actions), card.actions
 

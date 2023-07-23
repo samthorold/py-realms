@@ -16,6 +16,10 @@ from py_realms.models.player import Player
 logger = logging.getLogger(__name__)
 
 
+NUM_CARDS_START_GAME = 3
+NUM_CARDS_START_TURN = 5
+
+
 def player_setup(
     name: str, draw: int = 0, starting_deck: Sequence[Card] | None = None
 ) -> Player:
@@ -67,10 +71,8 @@ class Game(BaseModel):
 
     deck: Deck = Field(default_factory=deck_setup)
     players: tuple[Player, Player] = Field(default_factory=players_setup)
-    hand_size: int = 5
-    first_hand_size: int = 3
     current_player: int = 0
-    actions: list[Action] = [Action(type=ActionType.START_GAME)]
+    actions: list[Action] = [Action(type=ActionType.START_GAME, n=3)]
 
     def get_current_player(self) -> Player:
         return self.players[self.current_player]
@@ -150,13 +152,13 @@ class Game(BaseModel):
             raise ActionUnavailable(f"{action} not available")
         logger.debug("idx=%s action=%r", idx, action)
         match action:
-            case Action(type=ActionType.START_GAME, n=_, rule=_, faction=_):
-                for _ in range(self.first_hand_size):
+            case Action(type=ActionType.START_GAME, n=n, rule=_, faction=_):
+                for _ in range(n):
                     self.add_action(Action(type=ActionType.PLAY))
 
-            case Action(type=ActionType.START_TURN, n=_, rule=_, faction=_):
+            case Action(type=ActionType.START_TURN, n=n, rule=_, faction=_):
                 pl.new_hand()
-                for _ in range(self.hand_size):
+                for _ in range(n):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.PLAY, n=_, rule=_, faction=_):
