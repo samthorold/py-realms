@@ -8,8 +8,8 @@ class Card(BaseModel):
     """
     Examples:
 
-        >>> from models.action import Action
-        >>> from models.enums import ActionType, CardType, Faction, Rule
+        >>> from py_realms.models.action import Action
+        >>> from py_realms.models.enums import ActionType, CardType, Faction, Rule
         >>> Card(
         ...     name="scout",
         ...     type=CardType.SHIP,
