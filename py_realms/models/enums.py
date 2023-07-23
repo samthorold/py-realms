@@ -16,7 +16,7 @@ class Faction(Enum):
 
 
 class Rule(Enum):
-    """When an [ActionType][models.enums.ActionType] can be played."""
+    """When an [ActionType][py_realms.models.enums.ActionType] can be played."""
 
     ALWAYS = "ALWAYS"
     ALLY = "ALLY"

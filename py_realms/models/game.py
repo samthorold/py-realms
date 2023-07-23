@@ -136,7 +136,7 @@ class Game(BaseModel):
         Raises:
             ActionUnavailable: The action cannot be performed.
             UnknownActionType: The action type is not specified in the
-                [ActionType][models.enums.ActionType] enum.
+                [ActionType][py_realms.models.enums.ActionType] enum.
             UnknownAction: The action is not in the match statement
                 within this function.
 

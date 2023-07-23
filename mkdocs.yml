@@ -1,12 +1,12 @@
 site_name: PyRealms
 
 plugins:
-- autorefs
-- mkdocstrings
+  - autorefs
+  - mkdocstrings
 
 theme:
   name: material
 
 watch:
-- cards
-- models
+  - py_realms
+  - tests

@@ -1,9 +1,12 @@
+lint:
+	poetry run black py_realms tests --preview
+
 check:
-	flake8 .
-	black . --preview --check
-	mypy .
+	poetry run flake8 py_realms tests
+	poetry run black py_realms tests --preview --check
+	poetry run mypy py_realms tests
 
 test: check
-	coverage run -m pytest
-	coverage report -m --skip-covered
+	poetry run coverage run -m pytest
+	poetry run coverage report -m --skip-covered
 

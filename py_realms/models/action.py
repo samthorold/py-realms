@@ -8,8 +8,8 @@ from py_realms.models.enums import ActionType, Faction, Rule
 class Action(BaseModel):
     """What, when, and how many times an action can be executed.
 
-    - What: [models.enums.ActionType][]
-    - When: [models.enums.Rule][] and [models.enums.Faction][]
+    - What: [py_realms.models.enums.ActionType][]
+    - When: [py_realms.models.enums.Rule][] and [py_realms.models.enums.Faction][]
     - How many: `n`
 
     """
