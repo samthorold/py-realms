@@ -8,55 +8,18 @@ on:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty.
-  PYTHON_LATEST: "3.11"
 
 jobs:
-  install-python:
-    name: Install Python
+  pr-code-checks:
+    name: PR Code Checks
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.11
-
-  install-build-tools:
-    name: Install build tools
-    runs-on: ubuntu-latest
-    needs: install-python
-    steps:
       - run: curl -sSL https://install.python-poetry.org | python3 - --version 1.5.1
-
-  ci-test:
-    name: Tests
-    runs-on: ubuntu-latest
-    needs: install-build-tools
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-      - run: poetry install
-      - run: make ci-test
-
-  ci-lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    needs: install-build-tools
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
       - run: poetry install
       - run: make ci-lint
-
-  type-check:
-    name: Check
-    runs-on: ubuntu-latest
-    needs: install-build-tools
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
       - run: make type-check
+      - run: make ci-test
