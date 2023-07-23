@@ -1,6 +1,8 @@
 import logging
 from random import shuffle
 
+from pydantic import BaseModel, Field
+
 from cards.deck import GAME_STARTING_DECK
 from cards.factionless import EXPLORER
 from models.card import Card
@@ -8,13 +10,16 @@ from models.card import Card
 logger = logging.getLogger(__name__)
 
 
-class Deck:
-    def __init__(self, shuffle_on_init: bool = True):
-        self.explorers = [EXPLORER] * 20
-        self.trade_deck = list(GAME_STARTING_DECK)
-        self.trade_row: list[Card] = []
-        if shuffle_on_init:
-            shuffle(self.trade_deck)
+def get_shuffled_deck() -> list[Card]:
+    deck = list(GAME_STARTING_DECK)
+    shuffle(deck)
+    return deck
+
+
+class Deck(BaseModel):
+    explorers: list[Card] = [EXPLORER] * 20
+    trade_deck: list[Card] = Field(default_factory=get_shuffled_deck)
+    trade_row: list[Card] = []
 
     def acquire(self, idx: int) -> Card:
         """Returns the Card in the trade row at `idx` and draws another card."""

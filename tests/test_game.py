@@ -19,7 +19,7 @@ def test_player_setup() -> None:
 
 def test_game_init() -> None:
     game = Game()
-    assert len(game._players) == 2
+    assert len(game.players) == 2
 
 
 def test_action_start_game() -> None:
@@ -31,7 +31,7 @@ def test_action_start_game() -> None:
     expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 3
     game = Game(first_hand_size=3)
     game.action("start_game")
-    assert game._actions == expected
+    assert game.actions == expected
 
 
 def test_action_start_turn() -> None:
@@ -43,7 +43,7 @@ def test_action_start_turn() -> None:
     expected = [Action(type=ActionType.PLAY, n=1, rule=Rule.ALWAYS)] * 5
     game = Game(hand_size=5, actions=[Action(type=ActionType.START_TURN)])
     game.action("start_turn")
-    assert game._actions == expected
+    assert game.actions == expected
 
 
 def test_action_acquire() -> None:
@@ -59,12 +59,12 @@ def test_action_acquire() -> None:
     acquire_idx = 0
 
     players = (
-        Player("", trade=starting_trade),
-        Player(""),
+        Player(name="", trade=starting_trade),
+        Player(name=""),
     )
     actions = [Action(type=ActionType.ACQUIRE)]
     game = Game(players=players, actions=actions)
-    pl = game._players[0]
+    pl = game.players[0]
     card = game.trade_deck.trade_row[acquire_idx]
     # may draw the same card again from the trade deck
     # so count of acquired card in the trade row will be the same.
@@ -97,7 +97,7 @@ def test_action_acquire() -> None:
         [VIPER] + [SCOUT] * 2,
     ),
 )
-def test_action_play(hand: list[Card] | None) -> None:
+def test_action_play(hand: list[Card]) -> None:
     """Play action updates game state as expected.
 
     - One less card in hand.
@@ -106,7 +106,7 @@ def test_action_play(hand: list[Card] | None) -> None:
 
     """
 
-    players = (Player("", hand=hand), Player(""))
+    players = (Player(name="", hand=hand), Player(name=""))
 
     game = Game(players=players)
     game.action("START_GAME")
@@ -134,7 +134,7 @@ def test_action_play(hand: list[Card] | None) -> None:
     # TODO: fails when card is a viper
     assert len(pl.hand) < 3 and new_hand_count == (og_hand_count - 1), card
     assert len(pl.in_play) > 0 and new_in_play_count == (og_in_play_count + 1), card
-    assert all(c in game._actions for c in card.actions), card.actions
+    assert all(c in game.actions for c in card.actions), card.actions
 
 
 def test_unknown_action() -> None:

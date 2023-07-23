@@ -79,6 +79,7 @@ MECH_WORLD = Card(
     cost=5,
     type=CardType.OUTPOST,
     faction=Faction.ALL,
+    actions=tuple(),
     defense=6,
 )
 

@@ -1,8 +1,9 @@
+from pydantic import BaseModel
 from models.action import Action
 from models.enums import Faction, CardType
 
 
-class Card:
+class Card(BaseModel):
     """
     Examples:
 
@@ -20,23 +21,12 @@ class Card:
 
     """
 
-    def __init__(
-        self,
-        name: str,
-        type: CardType,
-        faction: Faction,
-        cost: int,
-        actions: tuple[Action, ...] = tuple(),
-        defense: int = 0,
-    ):
-        self.name = name
-        self.type = type
-        self.faction = faction
-        self.cost = cost
-        self.actions = tuple(
-            Action(type=a.type, n=a.n, rule=a.rule, faction=faction) for a in actions
-        )
-        self.defense = defense
+    name: str
+    type: CardType
+    faction: Faction
+    cost: int
+    actions: tuple[Action, ...]
+    defense: int = 0
 
     def __repr__(self) -> str:
         return (

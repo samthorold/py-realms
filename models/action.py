@@ -1,11 +1,11 @@
 from __future__ import annotations
-from dataclasses import dataclass
+
+from pydantic import BaseModel
 
 from models.enums import ActionType, Faction, Rule
 
 
-@dataclass(frozen=True)
-class Action:
+class Action(BaseModel):
     """What, when, and how many times an action can be executed.
 
     - What: [models.enums.ActionType][]

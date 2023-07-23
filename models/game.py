@@ -2,6 +2,8 @@ import logging
 from random import shuffle
 from typing import Sequence
 
+from pydantic import BaseModel, Field
+
 from cards.deck import PLAYER_STARTING_DECK
 from models.action import Action
 from models.card import Card
@@ -39,7 +41,7 @@ def player_setup(
     if draw:
         hand, deck = deck[:draw], deck[draw:]
     else:
-        hand, deck = None, deck
+        hand, deck = [], deck
     logger.debug("%s setup deck %s %s", name, hand, deck)
     return Player(name=name, deck=deck, hand=hand)
 
@@ -56,38 +58,23 @@ def deck_setup() -> Deck:
     return deck
 
 
-class Game:
+def players_setup() -> tuple[Player, Player]:
+    return (player_setup(name="P1", draw=3), player_setup(name="P2", draw=0))
+
+
+class Game(BaseModel):
     """Orchestrate the Deck and Players."""
 
-    def __init__(
-        self,
-        deck: Deck | None = None,
-        players: tuple[Player, Player] | None = None,
-        hand_size: int = 5,
-        first_hand_size: int = 3,
-        current_player: int = 0,
-        actions: Sequence[Action] | None = None,
-    ) -> None:
-        self.trade_deck = deck_setup() if deck is None else deck
-        self._players = (
-            tuple(
-                [
-                    player_setup(name="P1", draw=3),
-                    player_setup(name="P2", draw=0),
-                ]
-            )
-            if players is None
-            else players
-        )
-        self._actions = (
-            [Action(type=ActionType.START_GAME)] if actions is None else list(actions)
-        )
-        self._hand_size = hand_size
-        self._first_hand_size = first_hand_size
-        self._current_player = current_player
+    deck: Deck = Deck()
+    trade_deck: Deck = Field(default_factory=deck_setup)
+    players: tuple[Player, Player] = Field(default_factory=players_setup)
+    hand_size: int = 5
+    first_hand_size: int = 3
+    current_player: int = 0
+    actions: list[Action] = [Action(type=ActionType.START_GAME)]
 
     def get_current_player(self) -> Player:
-        return self._players[self._current_player]
+        return self.players[self.current_player]
 
     def hydrate_action(self, action: Action | ActionType | str) -> Action:
         if isinstance(action, str):
@@ -101,11 +88,11 @@ class Game:
 
     def add_action(self, action: Action) -> None:
         logger.debug("Add action %r", action)
-        self._actions.append(action)
+        self.actions.append(action)
 
     def remove_action(self, action: Action) -> None:
         logger.debug("Remove action %r", action)
-        self._actions.remove(action)
+        self.actions.remove(action)
 
     def add_card_actions(self, card: Card) -> None:
         for action in card.actions:
@@ -119,7 +106,7 @@ class Game:
     def replace_ally_actions(self, pl: Player, faction: Faction) -> None:
         actions = [
             action
-            for action in self._actions
+            for action in self.actions
             if action.rule == Rule.ALLY and action.faction == faction
         ]
         for action in actions:
@@ -129,7 +116,7 @@ class Game:
     def replace_scrap_actions(self, pl: Player, card: Card) -> None:
         actions = [
             action
-            for action in self._actions
+            for action in self.actions
             if action.rule == Rule.SCRAP and action in card.actions
         ]
         for action in actions:
@@ -159,18 +146,18 @@ class Game:
         logger.info("%s start action", pl)
         # raises UnknownActionType
         action = self.hydrate_action(action)
-        if action not in self._actions:
+        if action not in self.actions:
             logger.info("%r not available", action)
             raise ActionUnavailable(f"{action} not available")
         logger.debug("idx=%s action=%r", idx, action)
         match action:
             case Action(type=ActionType.START_GAME, n=_, rule=_, faction=_):
-                for _ in range(self._first_hand_size):
+                for _ in range(self.first_hand_size):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.START_TURN, n=_, rule=_, faction=_):
                 pl.new_hand()
-                for _ in range(self._hand_size):
+                for _ in range(self.hand_size):
                     self.add_action(Action(type=ActionType.PLAY))
 
             case Action(type=ActionType.PLAY, n=_, rule=_, faction=_):
@@ -184,7 +171,7 @@ class Game:
                     any(
                         a.type == ActionType.NEXT_SHIP_TOP_OF_DECK
                         and a.rule == Rule.ALWAYS
-                        for a in self._actions
+                        for a in self.actions
                     )
                     and card.type == CardType.SHIP
                 )
