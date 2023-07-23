@@ -65,8 +65,7 @@ def players_setup() -> tuple[Player, Player]:
 class Game(BaseModel):
     """Orchestrate the Deck and Players."""
 
-    deck: Deck = Deck()
-    trade_deck: Deck = Field(default_factory=deck_setup)
+    deck: Deck = Field(default_factory=deck_setup)
     players: tuple[Player, Player] = Field(default_factory=players_setup)
     hand_size: int = 5
     first_hand_size: int = 3
@@ -166,7 +165,7 @@ class Game(BaseModel):
                 self.replace_ally_actions(pl, card.faction)
 
             case Action(type=ActionType.ACQUIRE, n=_, rule=Rule.ALWAYS, faction=_):
-                card = self.trade_deck.acquire(idx)
+                card = self.deck.acquire(idx)
                 top_of_deck = (
                     any(
                         a.type == ActionType.NEXT_SHIP_TOP_OF_DECK

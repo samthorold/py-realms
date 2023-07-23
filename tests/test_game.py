@@ -65,12 +65,10 @@ def test_action_acquire() -> None:
     actions = [Action(type=ActionType.ACQUIRE)]
     game = Game(players=players, actions=actions)
     pl = game.players[0]
-    card = game.trade_deck.trade_row[acquire_idx]
+    card = game.deck.trade_row[acquire_idx]
     # may draw the same card again from the trade deck
     # so count of acquired card in the trade row will be the same.
-    og_count = len(
-        [c for c in game.trade_deck.trade_row + game.trade_deck.trade_deck if c == card]
-    )
+    og_count = len([c for c in game.deck.trade_row + game.deck.trade_deck if c == card])
 
     assert card not in pl.discard_pile
 
@@ -80,10 +78,10 @@ def test_action_acquire() -> None:
     assert pl.trade == (starting_trade - card.cost)
 
     new_count = len(
-        [c for c in game.trade_deck.trade_row + game.trade_deck.trade_deck if c == card]
+        [c for c in game.deck.trade_row + game.deck.trade_deck if c == card]
     )
     assert new_count == (og_count - 1)
-    assert len(game.trade_deck.trade_row) == 5
+    assert len(game.deck.trade_row) == 5
 
 
 @pytest.mark.parametrize(
