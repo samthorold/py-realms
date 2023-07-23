@@ -75,7 +75,7 @@ def test_action_acquire() -> None:
     )
     actions = [Action(type=ActionType.ACQUIRE)]
     game = Game(players=players, actions=actions)
-    pl = game.players[0]
+    pl = game.get_current_player()
     card = game.deck.trade_row[acquire_idx]
     # may draw the same card again from the trade deck
     # so count of acquired card in the trade row will be the same.
