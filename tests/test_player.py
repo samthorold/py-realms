@@ -1,8 +1,8 @@
 import pytest
 
-from cards.deck import PLAYER_STARTING_DECK
-from cards.machine import BATTLE_STATION
-from models.player import Player
+from py_realms.cards.deck import PLAYER_STARTING_DECK
+from py_realms.cards.machine import BATTLE_STATION
+from py_realms.models.player import Player
 
 
 @pytest.fixture

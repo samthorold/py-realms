@@ -1,5 +1,5 @@
-from models.action import Action
-from models.enums import ActionType, Rule
+from py_realms.models.action import Action
+from py_realms.models.enums import ActionType, Rule
 
 
 def test_action_as_always() -> None:

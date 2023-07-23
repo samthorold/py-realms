@@ -1,7 +1,7 @@
 import pytest
 
-from models.card import Card
-from models.deck import Deck
+from py_realms.models.card import Card
+from py_realms.models.deck import Deck
 
 
 @pytest.fixture

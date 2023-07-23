@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "py-realms"
+version = "0.1.0"
+description = "Star Realms Python implementation."
+authors = ["Sam Thorold <sam.thorold@gmail.com>"]
+readme = "README.md"
+packages = [{include = "py_realms"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+structlog = "^23.1.0"
+pydantic = "^2.0.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+mypy = "^1.4.1"
+flake8 = "^6.0.0"
+mkdocs-material = "^9.1.19"
+mkdocstrings-python = {extras = ["python"], version = "^1.2.1"}
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

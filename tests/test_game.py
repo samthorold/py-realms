@@ -1,12 +1,12 @@
 import pytest
 
-from cards.factionless import SCOUT, VIPER
-from models.action import Action
-from models.card import Card
-from models.enums import ActionType, Rule
-from models.exceptions import UnknownActionType
-from models.game import Game, player_setup
-from models.player import Player
+from py_realms.cards.factionless import SCOUT, VIPER
+from py_realms.models.action import Action
+from py_realms.models.card import Card
+from py_realms.models.enums import ActionType, Rule
+from py_realms.models.exceptions import UnknownActionType
+from py_realms.models.game import Game, player_setup
+from py_realms.models.player import Player
 
 
 def test_player_setup() -> None:
