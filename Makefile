@@ -2,6 +2,10 @@ lint:
 	poetry run black py_realms tests --preview
 	poetry run flake8 py_realms tests
 
+ci-lint:
+	poetry run black py_realms tests --preview --check
+	poetry run flake8 py_realms tests
+
 type-check:
 	poetry run mypy py_realms tests
 
